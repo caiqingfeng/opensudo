@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Level:
+  = @puzzle.level
+%p
+  %b Name:
+  = @puzzle.name
+%p
+  %b Description:
+  = @puzzle.description
+
+= link_to 'Edit', edit_puzzle_path(@puzzle)
+\|
+= link_to 'Back', puzzles_path

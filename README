@@ -1,0 +1,48 @@
+Sudoku3
+========================
+09/06/2011 Warsaw
+Start to port Sudoku from rails 2 to rails 3
+
+Create application from the template on https://github.com/railsapps/rails3-mongoid-devise, 
+
+rails g scaffold Puzzle level:integer name:string description:text
+
+10/06/2011 Warsaw
+Make the first cucumber of Puzzle passed
+
+To support database migration, a change needs to be made to the file config/application.rb to disperse the error
+mongoid error
+create a migrate to database and rspec it
+//obsolete above, mongoid is different in the database migration than ActiveRecord
+
+follow the introduction on http://asciicasts.com/episodes/238-mongoid
+change the model directly, add the validate_presence_of :name, to the model and modify spec/../puzzle_controller_spec.rb valid_attributes accordingly
+then rake spec passed
+
+So far a skeleton of BDD has been built for rails program.
+
+E:\Workspace\sudoku3>rails g model Sudoku puzzle:reference
+      invoke  mongoid
+      create    app/models/sudoku.rb
+      invoke    rspec
+      create      spec/models/sudoku_spec.rb
+
+E:\Workspace\sudoku3>rails g controller sudokus
+      create  app/controllers/sudokus_controller.rb
+      invoke  haml
+      create    app/views/sudokus (remove it)
+      invoke  rspec
+      create    spec/controllers/sudokus_controller_spec.rb
+      invoke  helper
+      create    app/helpers/sudokus_helper.rb
+      invoke    rspec
+      invoke  assets
+      create    app/assets/javascripts/sudokus.js.coffee (remove it)
+      invoke    scss
+      create      app/assets/stylesheets/sudokus.css.scss (remove it)
+________________________
+
+License
+
+Copyright 2011 Qingfeng Cai All rights reserved
+

@@ -1,0 +1,19 @@
+= form_for @puzzle do |f|
+  -if @puzzle.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@puzzle.errors.count, "error")} prohibited this puzzle from being saved:"
+      %ul
+        - @puzzle.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :level
+    = f.number_field :level
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :description
+    = f.text_area :description
+  .actions
+    = f.submit 'Save'

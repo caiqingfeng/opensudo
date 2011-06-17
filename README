@@ -21,6 +21,12 @@ then rake spec passed
 
 So far a skeleton of BDD has been built for rails program.
 
+17/06/2011 Warsaw
+Make compass worked. Compass 0.11 branch + Rails 3.1 RC4 need a lot of hacks.
+
+17/06/2011 Warsaw
+Create model Sudokus
+
 E:\Workspace\sudoku3>rails g model Sudoku puzzle:reference
       invoke  mongoid
       create    app/models/sudoku.rb

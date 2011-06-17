@@ -8,7 +8,6 @@
   %body.bp.two-col
     #container
       #header
-        %h1 Sudoku31
         %ul.hmenu
           = render 'devise/menu/registration_items'
           = render 'devise/menu/login_items'
@@ -18,9 +17,8 @@
         
         
       #content
-        %p.notice= notice
-        %p.error= alert
-        %p.success= notice
+        - flash.each do |name, msg|
+          = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
 
         = yield
       #footer

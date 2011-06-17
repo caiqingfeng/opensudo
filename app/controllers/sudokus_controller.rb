@@ -1,0 +1,2 @@
+class SudokusController < ApplicationController
+end

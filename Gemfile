@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 gem 'rails', '3.1.0.rc4'
-gem 'sass-rails', "~> 3.1.0.rc"
+#gem 'sass-rails', "~> 3.1.0.rc"
 gem 'coffee-script'
 gem 'uglifier'
 gem 'jquery-rails'
@@ -16,3 +16,6 @@ gem "launchy", ">= 0.4.0", :group => :test
 gem "bson_ext", ">= 1.3.1"
 gem "mongoid", ">= 2.0.2"
 gem "devise", ">= 1.3.4"
+gem 'sass-rails', :git => 'https://github.com/rails/sass-rails.git'
+gem 'compass', :git => "https://github.com/chriseppstein/compass.git", :branch => "rails31"
+

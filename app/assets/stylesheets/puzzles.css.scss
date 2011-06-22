@@ -5,3 +5,56 @@
 body.Puzzles {
   // Place scoped styles here
 }
+@mixin tableHover {
+	tbody td:hover {
+	  background: #FFD800;
+	  border: 1px solid #03476F;
+	  color: #FFFFFF;
+	  }
+	 tbody td:hover th,
+	 tbody td.odd:hover th {
+	  background: #FFD800;
+	  color: #FFFFFF;
+	  }
+}
+
+@mixin gridLineUp {
+	  tbody th, tbody td {
+		  vertical-align: top;
+		  text-align: center;
+	  }
+}
+
+	@mixin sudo_grid {
+	  	  @include gridLineUp;
+		  padding: 0px 0px 0px 0px;
+		  margin: 0px 0px 0px 0px;
+		  border-collapse:collapse;
+		  border-spacing: 0px 0px;
+		  border: 0px;
+		  width: 90%;
+		  height: 90%;
+		  float: left;
+		  td{
+			  font: bold 20px arial, helvetica, sans-serif;
+			  background: transparent;
+			  border: 1px solid #03476F;
+			  padding: 0px 0px 0px 0px;
+			  margin: 0px 0px;
+		  }
+	}
+	
+	#sudokutbl_convas {
+		border: 0px; //solid 10px #e5e5e6;
+		height: 355px;
+		width: 355px;
+		float: left;
+		#sudokutbl {
+			@include gridLineUp;
+			//border-spacing: 0px 0px;
+		  	//padding: 0px 0px 0px 0px;
+		  	//margin: 0px 0px;
+			@include sudo_grid;
+		  @include tableHover;
+		 }
+	}

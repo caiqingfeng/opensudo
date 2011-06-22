@@ -20,6 +20,8 @@
         - flash.each do |name, msg|
           = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
 
+        #sudokutbl_convas
+
         = yield
       #footer
         %h5 &copy; Copyright 2011. All rights reserved. 

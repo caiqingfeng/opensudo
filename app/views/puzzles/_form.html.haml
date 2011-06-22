@@ -11,9 +11,11 @@
     = f.number_field :level
   .field
     = f.label :name
-    = f.text_field :name
+    = f.text_field :name, :size => 16
+  .field
+    = f.hidden_field :createon
   .field
     = f.label :description
-    = f.text_area :description
+    = f.text_area :description, :size => "20x10"
   .actions
     = f.submit 'Save'

@@ -1,5 +1,7 @@
 Sudoku31::Application.routes.draw do
-  resources :puzzles
+  resources :puzzles do
+  	resources :sudokus
+  end
 
   #get \"users\/show\"
 

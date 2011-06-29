@@ -25,6 +25,7 @@ class PuzzlesController < ApplicationController
   # GET /puzzles/new.json
   def new
     @puzzle = Puzzle.new
+    @puzzle.cellstring = "cell11:1,cell99:9"
 
     respond_to do |format|
       format.html # new.html.erb

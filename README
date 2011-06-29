@@ -27,13 +27,13 @@ Make compass worked. Compass 0.11 branch + Rails 3.1 RC4 need a lot of hacks.
 17/06/2011 Warsaw
 Create model Sudokus
 
-E:\Workspace\sudoku3>rails g model Sudoku puzzle:reference
+E:\Workspace\sudoku31>rails g model Sudoku puzzle:reference
       invoke  mongoid
       create    app/models/sudoku.rb
       invoke    rspec
       create      spec/models/sudoku_spec.rb
 
-E:\Workspace\sudoku3>rails g controller sudokus
+E:\Workspace\sudoku31>rails g controller sudokus
       create  app/controllers/sudokus_controller.rb
       invoke  haml
       create    app/views/sudokus (remove it)
@@ -46,6 +46,26 @@ E:\Workspace\sudoku3>rails g controller sudokus
       create    app/assets/javascripts/sudokus.js.coffee (remove it)
       invoke    scss
       create      app/assets/stylesheets/sudokus.css.scss (remove it)
+
+23/06/2011 Prague
+Started to port it rails3.1, it is very painful especially to get compass working!
+Issue 1: Coffee Script to understand regular express. It is different than javascript
+e.g. new RegExp("string"+"/g") works well in Javascript but in Coffee it converts it automatically to /string\/g
+Don't yet how to fix it.
+
+update
+simply fixed it by set pattern.global = true (not mentioned in any document, discovered it when debuging to explore pattern)
+
+24/06/2011 Prague
+Issue1: editable cell fixed size. Fixed it by set CSS table-layout and word-wrap
+
+29/06/2011 Prague
+To do list:
+1.Port create sudokus table from JS to CS (needs to solve \)
+2.Fix the ul.hmenu
+3.Beautify the form
+4.I18N
+
 ________________________
 
 License

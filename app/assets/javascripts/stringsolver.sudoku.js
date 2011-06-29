@@ -1,5 +1,5 @@
 //IE doesn't support string[], have to change it to charAt() 06/10/2009
-function initializeGrid(orgCells) {
+function genCells(orgCells) {
   var allCells = orgCells;
   var patrn = /(cell[1-9]{2}:)([^1-9]|$)/g
   allCells = allCells.replace(patrn, "$1123456789");
@@ -401,7 +401,7 @@ function gothroughRCG(orgCells, fnRules){
     if (rows[x] == null || rows[x] == "invalid") return "invalid";
     newCells = newCells+","+rows[x];
   }
-  if (!gridEqual(newCells, orgCells)) orgCells = initializeGrid(newCells);
+  if (!gridEqual(newCells, orgCells)) orgCells = genCells(newCells);
   //col
   var cols=genCols(orgCells);
   newCells = "";
@@ -410,7 +410,7 @@ function gothroughRCG(orgCells, fnRules){
     if (cols[y] == null || cols[y] == "invalid") return "invalid";
     newCells = newCells+","+cols[y];
   }
-  if (!gridEqual(newCells, orgCells)) orgCells = initializeGrid(newCells);
+  if (!gridEqual(newCells, orgCells)) orgCells = genCells(newCells);
   //grid
   var grids = genGrids(orgCells);
   newCells = "";
@@ -420,7 +420,7 @@ function gothroughRCG(orgCells, fnRules){
     newCells = newCells+","+grids[g];
   }
   if (!gridEqual(newCells, orgCells)) {
-    orgCells = initializeGrid(newCells);
+    orgCells = genCells(newCells);
   } else {
     orgCells = newCells;
   }

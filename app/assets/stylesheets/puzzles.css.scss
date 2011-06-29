@@ -7,54 +7,69 @@ body.Puzzles {
 }
 @mixin tableHover {
 	tbody td:hover {
-	  background: #FFD800;
-	  border: 1px solid #03476F;
-	  color: #FFFFFF;
-	  }
-	 tbody td:hover th,
-	 tbody td.odd:hover th {
-	  background: #FFD800;
-	  color: #FFFFFF;
-	  }
-}
-
-@mixin gridLineUp {
-	  tbody th, tbody td {
-		  vertical-align: top;
-		  text-align: center;
-	  }
-}
-
-	@mixin sudo_grid {
-	  	  @include gridLineUp;
-		  padding: 0px 0px 0px 0px;
-		  margin: 0px 0px 0px 0px;
-		  border-collapse:collapse;
-		  border-spacing: 0px 0px;
-		  border: 0px;
-		  width: 90%;
-		  height: 90%;
-		  float: left;
-		  td{
-			  font: bold 20px arial, helvetica, sans-serif;
-			  background: transparent;
-			  border: 1px solid #03476F;
-			  padding: 0px 0px 0px 0px;
-			  margin: 0px 0px;
-		  }
+		  background: #FFD800;
+		  border: 1px solid #03476F;
+		  color: #FFFFFF;
 	}
-	
-	#sudokutbl_convas {
-		border: 0px; //solid 10px #e5e5e6;
-		height: 355px;
-		width: 355px;
+	tbody td:hover th,
+	tbody td.odd:hover th {
+		background: #FFD800;
+		color: #FFFFFF;
+	}
+}
+
+.readOnlyCell {
+	font: bold 10px arial, helvetica, sans-serif;
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px;
+	width: 11%;
+	height: 11%;
+	color: #333333;
+	background: #3eff3333;
+}
+
+.editableCell {
+	font: bold 18px arial, helvetica, sans-serif;
+	width: 82%;
+	height: 82%;
+	color: #333333;
+}
+
+.cellWithMoreNumbers {
+//don't know why font set here doesn't work
+	font: bold 13px arial, helvetica, sans-serif;
+	color: #D2B9D3;
+	padding: 0px 0px 0px 0px;
+	margin: 0px 0px 0px 0px;
+}
+
+#sudokutbl_convas {
+	border: 0px; //solid 10px #e5e5e6;
+	height: 355px;
+	width: 355px;
+	float: left;
+	#sudokutbl {
+		table-layout:fixed;
+		tbody th, tbody td {
+			vertical-align: middle;
+			text-align: center;
+		}
+		@include tableHover;
+		padding: 0px 0px 0px 0px;
+		margin: 0px 0px 0px 0px;
+		border-collapse:collapse;
+		border-spacing: 0px 0px;
+		width: 98%;
+		height: 98%;
 		float: left;
-		#sudokutbl {
-			@include gridLineUp;
-			//border-spacing: 0px 0px;
-		  	//padding: 0px 0px 0px 0px;
-		  	//margin: 0px 0px;
-			@include sudo_grid;
-		  @include tableHover;
-		 }
+		td{
+			font: bold 20px arial, helvetica, sans-serif;
+			background: transparent;
+			border: 1px solid #03476F;
+			padding: 0px 0px 0px 0px;
+			word-wrap: break-word;
+			margin: 0px 0px;
+		}
 	}
+}
+

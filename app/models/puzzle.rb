@@ -2,6 +2,7 @@ class Puzzle
   include Mongoid::Document
   field :level, :type => Integer
   field :name, :type => String
+  field :cellstring, :type => String
   field :description, :type => String
   field :createon, :type => Time, :default => Time.now
   

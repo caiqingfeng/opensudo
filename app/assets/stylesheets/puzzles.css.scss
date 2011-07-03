@@ -18,25 +18,35 @@ body.Puzzles {
 	}
 }
 
-.readOnlyCell {
-	font: bold 10px arial, helvetica, sans-serif;
+@mixin resetCell {
+	font: bold 20px arial, helvetica, sans-serif;
 	padding: 0px 0px 0px 0px;
 	margin: 0px 0px;
 	width: 11%;
 	height: 11%;
 	color: #333333;
-	background: #3eff3333;
 }
 
 .editableCell {
+	@include resetCell;
+	background-color: #FFFFFF; 
+}
+
+
+.readOnlyCell {
+	@include resetCell;
+	background-color: #6D7B8D; 
+}
+
+.cellInput {
 	font: bold 18px arial, helvetica, sans-serif;
 	width: 82%;
 	height: 82%;
 	color: #333333;
+	background-color: #FFFFFF; 
 }
 
 .cellWithMoreNumbers {
-//don't know why font set here doesn't work
 	font: bold 13px arial, helvetica, sans-serif;
 	color: #D2B9D3;
 	padding: 0px 0px 0px 0px;
@@ -49,6 +59,7 @@ body.Puzzles {
 	width: 355px;
 	float: left;
 	#sudokutbl {
+		border: solid 2px #03476F;
 		table-layout:fixed;
 		tbody th, tbody td {
 			vertical-align: middle;
@@ -63,8 +74,6 @@ body.Puzzles {
 		height: 98%;
 		float: left;
 		td{
-			font: bold 20px arial, helvetica, sans-serif;
-			background: transparent;
 			border: 1px solid #03476F;
 			padding: 0px 0px 0px 0px;
 			word-wrap: break-word;

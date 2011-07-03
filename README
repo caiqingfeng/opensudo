@@ -61,10 +61,21 @@ Issue1: editable cell fixed size. Fixed it by set CSS table-layout and word-wrap
 
 29/06/2011 Prague
 To do list:
-1.Port create sudokus table from JS to CS (needs to solve \)
-2.Fix the ul.hmenu
+1.Port create sudokus table from JS to CS 
+2.Fix the ul.hmenu (fixed it by set application.css.scss)
 3.Beautify the form
 4.I18N
+
+if i define td with font {}, even I use tdNode.removeClass().addClass('newFontCSS'), it will not change the size at all
+finally find out the root cause and remove css code in programe. 
+the same thing to background, background-color
+
+29/06/2011 Prague
+unexpected INDENT error raised by Coffeescript compiler. check carefully for the for loop, if a new line is not the part of the for loop, there should be a blank line
+
+03/07/2011 Prague
+Done porting create table from JS to CS. Though I prefer do it in the similar way done in the JS, it is more straightforward.
+When using jQuery to append, needs to be very careful to use the right selector $('#tbl'), otherwise no grid created by $('tbl')
 
 ________________________
 

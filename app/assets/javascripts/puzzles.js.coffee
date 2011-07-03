@@ -16,8 +16,6 @@ clickOnEdit = (content) ->
 		return false
 	if (content.current.length > 1)
 		tdNode.removeClass().addClass("cellWithMoreNumbers")
-		#don't know why class in puzzle.css.scss can't define font size there, so have to do it here.
-		tdNode.css("font-size", "13px")
 	return true
 
 #only digits allowed and numbers should be different
@@ -45,20 +43,44 @@ $(document).ready ->
 
 #sudoku(options)
 
+$.fn.initGrid = () ->
+	thisObj = $(this)
+	convas = $('#sudokutbl_convas', thisObj)
+	convas.empty()
+	convas.append('<table id="sudokutbl"></table>')
+	gridObj = $('#sudokutbl', convas)
+	for x in [1..9]
+		rowXString = 'row' + x
+		createRowString = "<tr id='" + rowXString + "'></tr>"
+		#createRowString = "<tr></tr>"
+		gridObj.append(createRowString)
+		rowX = $('#'+rowXString, gridObj)
+		for y in [1..9]
+			cellXYString = 'cell' + x + y
+			createCellString = "<td id='" + cellXYString + "'></td>"
+			#createCellString = "<td></td>"
+			rowX.append(createCellString)
+			cellXY = $('#'+cellXYString, rowX)
+	
+	convas.append('<h5><a rel="classic" class="styleswitch" style="cursor:pointer;">Classic</a> | <a rel="green_style" class="styleswitch" style="cursor:pointer;">Green</a> </h5>')
+	
+	return true
+
 $.fn.setGrid = (cellString) ->
-	alert(cellString)
+	#alert(cellString)
 	cssName = "standard"
 	allCells = genCells(cellString)
 	sudoCells = $(this).getAllSudoCells()
 	sudoCells.each((i, value) ->
-		$(value).removeClass().addClass('readOnlyCell')
+		$(value).removeClass().addClass('editableCell')
 		patrn = new RegExp(value.id+":[1-9]*")
 		patrn.global = true
 		matchedCells = cellString.match(patrn)
 		if (matchedCells == null) or (matchedCells.length != 1)
 			$(value).unbind("click")
-			$(value).editable({onSubmit:clickOnEdit, editClass: 'editableCell'})
+			$(value).editable({onSubmit:clickOnEdit, editClass: 'cellInput'})
 			return
+		$(value).removeClass().addClass('readOnlyCell')
 		$(value).html(matchedCells[0].substring(7))
 		return true)
 	return true

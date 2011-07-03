@@ -14,3 +14,15 @@
 @import "partials/two_col";
 
 @import "puzzles.css.scss";
+.hmenu {
+	height: 25px;
+	width: 960px;
+	margin: auto;
+	font-size: 18px;
+	li {
+		float: right;
+		list-style: none;
+		padding: 0px 40px 0px 0px;
+	}
+}
+

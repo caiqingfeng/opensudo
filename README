@@ -66,17 +66,35 @@ To do list:
 3.Beautify the form
 4.I18N
 
-if i define td with font {}, even I use tdNode.removeClass().addClass('newFontCSS'), it will not change the size at all
-finally find out the root cause and remove css code in programe. 
+if i define newCellCSS with font {}, even I use tdNode.removeClass().addClass('newFontCSS'), it will not change the size at all
+finally find out the root cause (get rid of font define inside td css) and remove css code in programe. 
 the same thing to background, background-color
 
 29/06/2011 Prague
 unexpected INDENT error raised by Coffeescript compiler. check carefully for the for loop, if a new line is not the part of the for loop, there should be a blank line
 
-03/07/2011 Prague
-Done porting create table from JS to CS. Though I prefer do it in the similar way done in the JS, it is more straightforward.
+03/07/2011 Warsaw
+Done porting create table from JS to CS. Though I prefer to do it in the similar way done in the JS (backup/grid.sudoku), this way is simple but less straightforward.
 When using jQuery to append, needs to be very careful to use the right selector $('#tbl'), otherwise no grid created by $('tbl')
+To do list:
+1. Port string.sudoku.js to CS
+2. I18N
+3. Finish all puzzles view
+4. Solution to puzzles
+5. JS test under cabybara
 
+It might be better to create a help system to track all I have done for the developing. Will be funny.
+
+04/07/2011 Warsaw
+define a step for select in web_steps.rb then level (select box) now get supported in cucumber
+just don't know why it has not been defined from the beginning, since it is so common?
+
+07/07/2011 Warsaw
+It likes a little bit hack to make capybara go!
+Cellstring is a hidden field, to set its value I need to create a new web step "...set hidden value...", and pass the name with ugly parameter puzzle[cellstring].
+tried selenium, but failed to find good document to guide me through
+!!! Successfully to set validate and make cucumber & rspec passed!
+JS testing still needs to be studied.
 ________________________
 
 License

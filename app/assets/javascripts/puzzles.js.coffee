@@ -16,6 +16,9 @@ clickOnEdit = (content) ->
 		return false
 	if (content.current.length > 1)
 		tdNode.removeClass().addClass("cellWithMoreNumbers")
+	if (content.current.length == 1)
+		$(document).updateFormCellString("cell"+cellId, content.current)
+	
 	return true
 
 #only digits allowed and numbers should be different
@@ -37,17 +40,32 @@ options = {editableCallback: clickOnEdit, playable: false, editable: true}
 $(document).ready -> 
 	thisObj = $(this)
 	thisObj.initGrid()
-	cellString = $('#puzzle_cellstring', thisObj).val()
+	cellString = $('#puzzleOnShow', thisObj).text()
 	gridObj = $('#sudokutbl', thisObj)
 	gridObj.setGrid(cellString)
 
 #sudoku(options)
 
+$.fn.updateFormCellString = (cellId, cellV) ->
+	return false if cellV.length != 1
+	thisObj = $(this)
+	cellStringField = $('input[id$="cellstring"]', thisObj)
+	orgCellString = cellStringField.val()
+	patrn = new RegExp(cellId+":[1-9]*")
+	patrn.global = true
+	if orgCellString.match(patrn)
+		cellString = orgCellString.replace(patrn, cellId+":"+cellV)
+	else
+		cellString = orgCellString+cellId+":"+cellV
+	cellStringField.val(cellString)
+	return true
+	
 $.fn.initGrid = () ->
 	thisObj = $(this)
 	convas = $('#sudokutbl_convas', thisObj)
 	convas.empty()
 	convas.append('<table id="sudokutbl"></table>')
+	#take me a few days to fix it when $('sudokutbl') doesn't work
 	gridObj = $('#sudokutbl', convas)
 	for x in [1..9]
 		rowXString = 'row' + x
@@ -67,7 +85,7 @@ $.fn.initGrid = () ->
 	return true
 
 $.fn.setGrid = (cellString) ->
-	#alert(cellString)
+	cellString = "" if !cellString
 	cssName = "standard"
 	allCells = genCells(cellString)
 	sudoCells = $(this).getAllSudoCells()

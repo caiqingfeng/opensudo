@@ -27,6 +27,7 @@ describe PuzzlesController do
     @valid_attributes = {
       :name => "Example Puzzle",
       :description => "Example Puzzle",
+      :cellstring => "cell11:1,cell12:3,cell13:4",
       :level => "1"
     }  
   end

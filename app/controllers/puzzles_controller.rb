@@ -3,6 +3,7 @@ class PuzzlesController < ApplicationController
   # GET /puzzles.json
   def index
     @puzzles = Puzzle.all
+    @puzzleOnShow = getPuzzleOnShow(@puzzles.first)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,6 +15,7 @@ class PuzzlesController < ApplicationController
   # GET /puzzles/1.json
   def show
     @puzzle = Puzzle.find(params[:id])
+    @puzzleOnShow = getPuzzleOnShow(@puzzle)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -25,7 +27,7 @@ class PuzzlesController < ApplicationController
   # GET /puzzles/new.json
   def new
     @puzzle = Puzzle.new
-    @puzzle.cellstring = "cell11:1,cell99:9"
+    @puzzleOnShow = getPuzzleOnShow(@puzzle)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -36,12 +38,14 @@ class PuzzlesController < ApplicationController
   # GET /puzzles/1/edit
   def edit
     @puzzle = Puzzle.find(params[:id])
+    @puzzleOnShow = getPuzzleOnShow(@puzzle)
   end
 
   # POST /puzzles
   # POST /puzzles.json
   def create
     @puzzle = Puzzle.new(params[:puzzle])
+    @puzzleOnShow = getPuzzleOnShow(@puzzle)
 
     respond_to do |format|
       if @puzzle.save
@@ -58,6 +62,7 @@ class PuzzlesController < ApplicationController
   # PUT /puzzles/1.json
   def update
     @puzzle = Puzzle.find(params[:id])
+    @puzzleOnShow = getPuzzleOnShow(@puzzle)
 
     respond_to do |format|
       if @puzzle.update_attributes(params[:puzzle])
@@ -80,5 +85,12 @@ class PuzzlesController < ApplicationController
       format.html { redirect_to puzzles_url }
       format.json { head :ok }
     end
+  end
+  
+  def getPuzzleOnShow(puzzle)
+  	if !puzzle
+  		return "cell11:1,cell23:5,cell99:8"
+  	end
+  	puzzle.cellstring
   end
 end

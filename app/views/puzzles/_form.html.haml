@@ -1,30 +1,29 @@
-= form_for @puzzle do |f|
-  -if @puzzle.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@puzzle.errors.count, "error")} prohibited this puzzle from being saved:"
-      %ul
-        - @puzzle.errors.full_messages.each do |msg|
-          %li= msg
+#puzzle_form_convas
+  = form_for @puzzle do |f|
+    -if @puzzle.errors.any?
+      #error_explanation
+        %h2= "#{pluralize(@puzzle.errors.count, "error")} prohibited this puzzle from being saved:"
+        %ul
+          - @puzzle.errors.full_messages.each do |msg|
+            %li= msg
 
-  .field
-    = f.label :level
-    <br/>
-    = f.select :level, [["easy *", 1], ["normal **",2], ["difficult ***",3], ["extreme ****",4]]
-  .field
-    = f.label :name
-    <br/>
-    = f.text_field :name, :size => 25
-  .field
-    = f.hidden_field :createon
-  .field
-    = f.hidden_field :cellstring
-  .field
-    = f.label :description
-    <br/>
-    = f.text_area :description, :size => "20x10"
-  .actions
-    = f.submit 'Save'
+    .field
+      = f.label :level
+      <br/>
+      = f.select :level, [["easy *", 1], ["normal **",2], ["difficult ***",3], ["extreme ****",4]]
+    .field
+      = f.label :name
+      <br/>
+      = f.text_field :name, :size => 25
+    .field
+      = f.hidden_field :createon
+    .field
+      = f.hidden_field :cellstring
+    .field
+      = f.label :description
+      <br/>
+      = f.text_area :description, :size => "20x10"
+    .actions
+      = f.submit 'Save'
 
-.hiddenOptions
-  %ul#puzzleOnShow
-    = @puzzleOnShow
+= render 'hidden_options'

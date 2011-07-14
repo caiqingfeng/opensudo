@@ -26,6 +26,9 @@ module NavigationHelpers
     when /puzzles new/
     	'/puzzles/new'
 
+    when /puzzles/
+    	'/puzzles'
+
     else
       begin
         page_name =~ /the (.*) page/

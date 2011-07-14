@@ -5,6 +5,7 @@ class Puzzle
   field :cellstring, :type => String
   field :description, :type => String
   field :createon, :type => Time, :default => Time.now
+  field :createby, :type => String
   
   embeds_many :sudokus
   
@@ -30,7 +31,7 @@ class Puzzle
       end
     end
     
-    #line by line
+    #row by row
     1.upto(9) do |v|
 	  1.upto(9) do |x|
         pattrn = Regexp.new("cell"+x.to_s+"[1-9]{1}:"+v.to_s)
@@ -39,7 +40,7 @@ class Puzzle
       end
     end
     
-    #row by row
+    #col by col
     1.upto(9) do |v|
       1.upto(9) do |y|
         pattrn = Regexp.new("cell"+"[1-9]{1}"+y.to_s+":"+v.to_s)

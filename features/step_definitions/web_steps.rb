@@ -65,31 +65,13 @@ When /^(?:|I )fill in "([^"]*)" for "([^"]*)"$/ do |value, field|
   fill_in(field, :with => value)
 end
 
-When /^(?:|I )set "([^"]*)" with "([^"]*)"$/ do |aDom, value|
-  cellString = "$('input[id$=\"cellstring\"]').val('cell11:1,cell99:9')"
-  puts cellString
-#  page.evaluate_script(cellString)
-  cellString = "$('input[id$=\"level\"]').val('2')"
-  puts cellString
-#  page.evaluate_script(cellString)
-  cellString = "$('table #cell44').val('4')"
-  puts cellString
-#  puts find_field('cellstring').value
-  find_field('Cellstring').value
-  sleep (5)
-end
-
+#07/07/2011 no locate anymore in Capybara
 When /^I change the value of the hidden field "([^\"]*)" to "([^\"]*)"$/ do |field_name, value|
   msg = "cannot set value of hidden field with name '#{field_name}'"
   xpath = %{//input[@type="hidden" and @name="#{field_name}"]}
   #page.locate(:xpath, xpath, msg).set(value)
   page.find(:xpath, xpath, msg).set(value)
 end 
-
-#It should be a common definition
-When /^(?:|I )select "([^"]*)" with "([^"]*)"$/ do |box, option|
-  select(option, :from => box)
-end
 
 # Use this to fill in an entire form with data from a table. Example:
 #

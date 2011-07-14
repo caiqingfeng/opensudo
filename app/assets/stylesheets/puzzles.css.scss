@@ -18,6 +18,14 @@ body.Puzzles {
 	}
 }
 
+@mixin tableRowHover {
+	tbody tr:hover {
+		  background: #FFD800;
+		  border: 1px solid #03476F;
+		  color: #FFFFFF;
+	}
+}
+
 @mixin resetCell {
 	font: bold 20px arial, helvetica, sans-serif;
 	padding: 0px 0px 0px 0px;
@@ -86,3 +94,39 @@ body.Puzzles {
 	}
 }
 
+#puzzles_list_convas {
+	border: 0px; //solid 10px #e5e5e6;
+	height: 325px;
+	width: 275px;
+	float: left;
+	#puzzles_list {
+		border: solid 0px #03476F;
+		table-layout:fixed;
+		tbody th, tbody td {
+			vertical-align: middle;
+			text-align: center;
+		}
+		@include tableRowHover;
+		width: 98%;
+		tr {
+			background-color: #ffc; 
+			height: 35px;
+			td, th{
+				border: 0px solid #03476F;
+				padding: 0px 0px 0px 0px;
+				word-wrap: break-word;
+				margin: 0px 0px;
+				overflow: hidden;
+			}
+			.Description {
+				width: 110px;
+			}
+			.ActionEdit {
+				width: 35px;
+			}
+			.ActionDestroy {
+				width: 55px;
+			}
+		}
+	}
+}

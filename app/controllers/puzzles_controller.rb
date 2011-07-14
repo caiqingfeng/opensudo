@@ -4,6 +4,7 @@ class PuzzlesController < ApplicationController
   def index
     @puzzles = Puzzle.all
     @puzzleOnShow = getPuzzleOnShow(@puzzles.first)
+    @gridOption = "playable"
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,6 +17,7 @@ class PuzzlesController < ApplicationController
   def show
     @puzzle = Puzzle.find(params[:id])
     @puzzleOnShow = getPuzzleOnShow(@puzzle)
+    @gridOption = "playable"
 
     respond_to do |format|
       format.html # show.html.erb
@@ -28,6 +30,7 @@ class PuzzlesController < ApplicationController
   def new
     @puzzle = Puzzle.new
     @puzzleOnShow = getPuzzleOnShow(@puzzle)
+    @gridOption = "editable"
 
     respond_to do |format|
       format.html # new.html.erb
@@ -39,6 +42,7 @@ class PuzzlesController < ApplicationController
   def edit
     @puzzle = Puzzle.find(params[:id])
     @puzzleOnShow = getPuzzleOnShow(@puzzle)
+    @gridOption = "editable"
   end
 
   # POST /puzzles
@@ -46,6 +50,7 @@ class PuzzlesController < ApplicationController
   def create
     @puzzle = Puzzle.new(params[:puzzle])
     @puzzleOnShow = getPuzzleOnShow(@puzzle)
+    @gridOption = "editable"
 
     respond_to do |format|
       if @puzzle.save
@@ -63,6 +68,7 @@ class PuzzlesController < ApplicationController
   def update
     @puzzle = Puzzle.find(params[:id])
     @puzzleOnShow = getPuzzleOnShow(@puzzle)
+    @gridOption = "editable"
 
     respond_to do |format|
       if @puzzle.update_attributes(params[:puzzle])

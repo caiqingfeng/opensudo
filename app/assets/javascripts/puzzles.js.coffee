@@ -5,7 +5,70 @@
 
 $ = jQuery
 
-clickOnEdit = (content) -> 
+#div sudokus_container, div sudokustbl are global shared 
+#create table by the parameter cellString
+#set readOnly cells by readOnly parameter
+#new puzzle or play puzzle (show puzzle)
+
+$(document).ready -> 
+	thisObj = $(this)
+	thisObj.initGrid()
+	cellString = $('#puzzleOnShow', thisObj).text()
+	gridOptionText = "playable"
+	gridOptionText = $('#gridOption', thisObj).text()
+	gridObj = $('#sudokutbl', thisObj)
+	gridObj.setGrid(cellString, $.trim(gridOptionText) == "editable")
+	#set css for puzzle list
+	$('#puzzles_list tr:even').css("background-color", "#cef")
+	#set hook function of save
+	aa = $('#puzzle_form_convas form')
+	$('#puzzle_form_convas form').submit( ->
+		return gridObj.able2Solve())
+
+$.fn.able2Solve = () ->
+	thisObj = $(this)
+	
+	#gen string from grid
+	cellString = thisObj.genString()
+	
+	#solved cells
+	solvedCellString = thisObj.findAnswer(cellString, 0)
+	
+	#update grid
+	thisObj.setGrid(solvedCellString, true)
+	alert(solvedCellString)
+	
+	#verify cells solved
+	able2Solved = thisObj.completedGrid(solvedCellString)
+	if !able2Solved
+		alert("Are you sure is it a valid grid?")
+		return false
+	return true
+
+$.fn.genString = () ->
+	thisObj = $(this)
+	cellString = ""
+	sudoCells = $(this).getAllSudoCells()
+	sudoCells.each((i, value) ->
+		cellString = cellString + "," + value.id + ":" + $(value).html())
+	return cellString
+	
+#cannot DRY here because it's callback. $(this) need to be in the stack 1
+clickOnPlay = (content) ->
+	$sudo = $('#sudokutbl')
+	tdNode = $(this)
+	cellId =  tdNode[0].id.substring(4, 6)
+	cellValidate = validateCell(content.current)
+	if (cellValidate == false)
+		tdNode.html("")
+		alert("You have to enter a very different digit 1..9.")
+		return false
+	if (content.current.length > 1)
+		tdNode.removeClass().addClass("cellWithMoreNumbers")
+	return true
+
+#canot DRY here ... means cannot just call clickOnPlay instead of copying the code from it
+clickOnEdit = (content) ->
 	$sudo = $('#sudokutbl')
 	tdNode = $(this)
 	cellId =  tdNode[0].id.substring(4, 6)
@@ -18,9 +81,8 @@ clickOnEdit = (content) ->
 		tdNode.removeClass().addClass("cellWithMoreNumbers")
 	if (content.current.length == 1)
 		$(document).updateFormCellString("cell"+cellId, content.current)
-	
 	return true
-
+	
 #only digits allowed and numbers should be different
 validateCell = (currentV) ->
 	if (currentV.length > 5) or (currentV.match(/[^1-9]{1}/g))
@@ -30,20 +92,6 @@ validateCell = (currentV) ->
 		return false
 	return true
 
-options = {editableCallback: clickOnEdit, playable: false, editable: true}
-
-#div sudokus_container, div sudokustbl are global shared 
-#create table by the parameter cellString
-#set readOnly cells by readOnly parameter
-#new puzzle or play puzzle (show puzzle)
-
-$(document).ready -> 
-	thisObj = $(this)
-	thisObj.initGrid()
-	cellString = $('#puzzleOnShow', thisObj).text()
-	gridObj = $('#sudokutbl', thisObj)
-	gridObj.setGrid(cellString)
-
 #sudoku(options)
 
 $.fn.updateFormCellString = (cellId, cellV) ->
@@ -51,8 +99,8 @@ $.fn.updateFormCellString = (cellId, cellV) ->
 	thisObj = $(this)
 	cellStringField = $('input[id$="cellstring"]', thisObj)
 	orgCellString = cellStringField.val()
-	patrn = new RegExp(cellId+":[1-9]*")
-	patrn.global = true
+	patrn = new RegExp(cellId+":[1-9]*", "g")
+	#patrn.global = true
 	if orgCellString.match(patrn)
 		cellString = orgCellString.replace(patrn, cellId+":"+cellV)
 	else
@@ -70,13 +118,11 @@ $.fn.initGrid = () ->
 	for x in [1..9]
 		rowXString = 'row' + x
 		createRowString = "<tr id='" + rowXString + "'></tr>"
-		#createRowString = "<tr></tr>"
 		gridObj.append(createRowString)
 		rowX = $('#'+rowXString, gridObj)
 		for y in [1..9]
 			cellXYString = 'cell' + x + y
 			createCellString = "<td id='" + cellXYString + "'></td>"
-			#createCellString = "<td></td>"
 			rowX.append(createCellString)
 			cellXY = $('#'+cellXYString, rowX)
 	
@@ -84,22 +130,27 @@ $.fn.initGrid = () ->
 	
 	return true
 
-$.fn.setGrid = (cellString) ->
+$.fn.setGrid = (cellString, editableGrid) ->
 	cellString = "" if !cellString
-	cssName = "standard"
-	allCells = genCells(cellString)
 	sudoCells = $(this).getAllSudoCells()
 	sudoCells.each((i, value) ->
+		fnCallback = clickOnPlay
+		fnCallback = clickOnEdit if editableGrid
 		$(value).removeClass().addClass('editableCell')
-		patrn = new RegExp(value.id+":[1-9]*")
-		patrn.global = true
+		patrn = new RegExp(value.id+":[1-9]+", "g")
 		matchedCells = cellString.match(patrn)
-		if (matchedCells == null) or (matchedCells.length != 1)
+		if (matchedCells == null || matchedCells.length != 1)
 			$(value).unbind("click")
-			$(value).editable({onSubmit:clickOnEdit, editClass: 'cellInput'})
+			$(value).editable({onSubmit:fnCallback, editClass: 'cellInput'})
 			return
-		$(value).removeClass().addClass('readOnlyCell')
 		$(value).html(matchedCells[0].substring(7))
+		if !editableGrid
+			$(value).removeClass().addClass('readOnlyCell')
+		else
+			$(value).unbind("click")
+			$(value).editable({onSubmit:fnCallback, editClass: 'cellInput'})
+			if (matchedCells[0].length > 8)
+				$(value).addClass("cellWithMoreNumbers")
 		return true)
 	return true
 

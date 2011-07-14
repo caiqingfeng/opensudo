@@ -50,11 +50,12 @@ E:\Workspace\sudoku31>rails g controller sudokus
 23/06/2011 Prague
 Started to port it rails3.1, it is very painful especially to get compass working!
 Issue 1: Coffee Script to understand regular express. It is different than javascript
-e.g. new RegExp("string"+"/g") works well in Javascript but in Coffee it converts it automatically to /string\/g
+e.g. new RegExp("string", "g") works well in Javascript but in Coffee it converts it automatically to /string\/g
 Don't yet how to fix it.
 
 update
 simply fixed it by set pattern.global = true (not mentioned in any document, discovered it when debuging to explore pattern)
+It should be wrong!!! because pattern.global is readonly.
 
 24/06/2011 Prague
 Issue1: editable cell fixed size. Fixed it by set CSS table-layout and word-wrap
@@ -95,6 +96,17 @@ Cellstring is a hidden field, to set its value I need to create a new web step "
 tried selenium, but failed to find good document to guide me through
 !!! Successfully to set validate and make cucumber & rspec passed!
 JS testing still needs to be studied.
+To do list:
+1. Pagination
+2. I18N
+3. Puzzles View
+4. Solution to puzzles
+5. JS test
+6. Modify puzzle model to reflect who created it and when
+7. (both server and JS side) check a puzzle if it can be fixed by program automatically. If not, return it to creator and ask he/she mark the level as **** (level 4)
+
+When get text from DOM, sometimes there will be space/newline at the end of the string, be VERY carefully to compare with another string!!! It takes me a few hours to fixed it by add jQuery.trim to remove all spaces and new line!!!
+
 ________________________
 
 License

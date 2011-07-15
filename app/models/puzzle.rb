@@ -1,5 +1,7 @@
 class Puzzle
   include Mongoid::Document
+  cattr_reader :per_page
+  @@per_page = 5
   field :level, :type => Integer
   field :name, :type => String
   field :cellstring, :type => String

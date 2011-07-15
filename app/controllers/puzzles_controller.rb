@@ -2,7 +2,8 @@ class PuzzlesController < ApplicationController
   # GET /puzzles
   # GET /puzzles.json
   def index
-    @puzzles = Puzzle.all
+    puzzles_all = Puzzle.all
+    @puzzles = puzzles_all.paginate :page => params[:page],:per_page => 5
     @puzzleOnShow = getPuzzleOnShow(@puzzles.first)
     @gridOption = "playable"
 

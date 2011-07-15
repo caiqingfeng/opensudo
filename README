@@ -107,6 +107,12 @@ To do list:
 
 When get text from DOM, sometimes there will be space/newline at the end of the string, be VERY carefully to compare with another string!!! It takes me a few hours to fixed it by add jQuery.trim to remove all spaces and new line!!!
 
+14/07/2011 Warsaw
+finished porting sudoku.js to coffescript. There are a lot of problems have been fixed. But finally I am here.
+
+15/07/2011 Warsaw
+Added AJAX update puzzle grid over the click to the list. By call jQuery.get(.json, ...)
+Added support for will_paginate, remember to restart server when change gemfile
 ________________________
 
 License

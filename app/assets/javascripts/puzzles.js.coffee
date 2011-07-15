@@ -19,12 +19,29 @@ $(document).ready ->
 	gridObj = $('#sudokutbl', thisObj)
 	gridObj.setGrid(cellString, $.trim(gridOptionText) == "editable")
 	#set css for puzzle list
-	$('#puzzles_list tr:even').css("background-color", "#cef")
+	$('#puzzles_list tr:even').removeClass().addClass("even_tr")
+	#AJAX click on puzzle list
+	$('#puzzles_list tr').click( ->
+		return $(this).updatePuzzleOnShow())
 	#set hook function of save
-	aa = $('#puzzle_form_convas form')
 	$('#puzzle_form_convas form').submit( ->
 		return gridObj.able2Solve())
 
+$.fn.updatePuzzleOnShow = () ->
+	thisObj = $(this)
+	updatePuzzleOnShow = ""
+	$('a', thisObj).each( ->
+		tmpString = $(this).attr("href")
+		updatePuzzleOnShow = tmpString.replace(/\/edit$/, ".json") if tmpString.match(/edit$/)
+		#alert(updatePuzzleOnShow)
+		return)
+	if updatePuzzleOnShow != ""
+		$.get(updatePuzzleOnShow, (data) ->
+			gridObj = $('#sudokutbl')
+			gridObj.setGrid(data["cellstring"], false)
+			return)
+	return
+	
 $.fn.able2Solve = () ->
 	thisObj = $(this)
 	
@@ -36,7 +53,6 @@ $.fn.able2Solve = () ->
 	
 	#update grid
 	thisObj.setGrid(solvedCellString, true)
-	alert(solvedCellString)
 	
 	#verify cells solved
 	able2Solved = thisObj.completedGrid(solvedCellString)
@@ -65,6 +81,8 @@ clickOnPlay = (content) ->
 		return false
 	if (content.current.length > 1)
 		tdNode.removeClass().addClass("cellWithMoreNumbers")
+	else
+		tdNode.removeClass().addClass("editableCell")
 	return true
 
 #canot DRY here ... means cannot just call clickOnPlay instead of copying the code from it
@@ -79,6 +97,8 @@ clickOnEdit = (content) ->
 		return false
 	if (content.current.length > 1)
 		tdNode.removeClass().addClass("cellWithMoreNumbers")
+	else
+		tdNode.removeClass().addClass("editableCell")
 	if (content.current.length == 1)
 		$(document).updateFormCellString("cell"+cellId, content.current)
 	return true
@@ -126,14 +146,13 @@ $.fn.initGrid = () ->
 			rowX.append(createCellString)
 			cellXY = $('#'+cellXYString, rowX)
 	
-	convas.append('<h5><a rel="classic" class="styleswitch" style="cursor:pointer;">Classic</a> | <a rel="green_style" class="styleswitch" style="cursor:pointer;">Green</a> </h5>')
-	
 	return true
 
 $.fn.setGrid = (cellString, editableGrid) ->
 	cellString = "" if !cellString
 	sudoCells = $(this).getAllSudoCells()
 	sudoCells.each((i, value) ->
+		$(value).html("")
 		fnCallback = clickOnPlay
 		fnCallback = clickOnEdit if editableGrid
 		$(value).removeClass().addClass('editableCell')
@@ -145,6 +164,7 @@ $.fn.setGrid = (cellString, editableGrid) ->
 			return
 		$(value).html(matchedCells[0].substring(7))
 		if !editableGrid
+			$(value).unbind("click")
 			$(value).removeClass().addClass('readOnlyCell')
 		else
 			$(value).unbind("click")

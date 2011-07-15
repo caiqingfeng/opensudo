@@ -16,6 +16,8 @@
         %td= puzzle.description
         %td= link_to 'Edit', edit_puzzle_path(puzzle)
         %td= link_to 'Delete', puzzle, :confirm => 'Are you sure?', :method => :delete
+    
+    = will_paginate @puzzles
   
   = link_to 'New Puzzle', new_puzzle_path
 

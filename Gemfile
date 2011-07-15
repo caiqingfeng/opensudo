@@ -18,4 +18,4 @@ gem "mongoid", ">= 2.0.2"
 gem "devise", ">= 1.3.4"
 gem 'sass-rails', :git => 'https://github.com/rails/sass-rails.git'
 gem 'compass', :git => "https://github.com/chriseppstein/compass.git", :branch => "rails31"
-
+gem "will_paginate", :git => "https://github.com/p7r/will_paginate.git", :branch => "rails3"

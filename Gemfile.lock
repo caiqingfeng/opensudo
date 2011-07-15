@@ -9,6 +9,13 @@ GIT
       sass (~> 3.1)
 
 GIT
+  remote: https://github.com/p7r/will_paginate.git
+  revision: 53d1da6da003dc172ee054e4cc416d0723f00b88
+  branch: rails3
+  specs:
+    will_paginate (3.0.pre3)
+
+GIT
   remote: https://github.com/rails/sass-rails.git
   revision: 4771b3f3f0641eed1f90686de9c261ac1f792518
   specs:
@@ -219,3 +226,4 @@ DEPENDENCIES
   rspec-rails (>= 2.6.1)
   sass-rails!
   uglifier
+  will_paginate!

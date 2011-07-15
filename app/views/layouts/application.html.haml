@@ -15,14 +15,44 @@
         %div Sudoku (Japanese); English pronunciation: soo-doh-koo) is a logic-based, combinatorial number-placement puzzle. The objective is to fill a 9*9 grid with digits so that each column, each row, and each of the nine 3*3 sub-grids that compose the grid (also called "boxes", "blocks", "regions", or "sub-squares") contains all of the digits from 1 to 9. The puzzle setter provides a partially completed grid, which typically has a unique solution.Completed puzzles are always a type of Latin square with an additional constraint on the contents of individual regions. For example, the same single integer may not appear twice in the same 9*9 playing board row or column or in any of the nine 3x3 subregions of the 9x9 playing board. The puzzle was popularized in 1986 by the Japanese puzzle company Nikoli, under the name Sudoku, meaning single number. It became an international hit in 2005.
         = link_to "http://en.wikipedia.org/wiki/Sudoku", "http://en.wikipedia.org/wiki/Sudoku"
         
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        %div A practice to rails 3.1 with heavy usage of CoffeeScript, Compass, Blueprint, Cucumber, RSpec
+        %div Author: francois_cai@hotmail.com
+        
+        #picture_convas
+          = image_tag "pageon.jpg", :size => "300x250"
+        
         
       #content
         - flash.each do |name, msg|
           = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
 
         #sudokutbl_convas
+        #toolbox_convas
+          #button_convas
+            %button GreedyMark
+            %div Mark all possible values of all cells. 
+          #button_convas
+            %button n_IN_n
+            %div If cell12:24 and cell13:24, "24" should not appear on all other cells of line 1. 
+          #button_convas
+            %button FindAnswer
+            %div Get the answer!!! 
+          #button_convas
+            %button Generate Picture
+            %div Generate a JPEG file from current puzzle. 
+          #button_convas
+            %button Upload
+            %div Upload a JPEG file taken by phone or camera 
+          #button_convas
+            %button Rotate
+            %div Rotate current puzzle clockwise 90
 
-        = yield
+        #puzzle_mgmt_convas
+          = yield
       #footer
         %h5 &copy; Copyright 2011. All rights reserved. 
 

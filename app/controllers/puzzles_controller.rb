@@ -1,4 +1,6 @@
 class PuzzlesController < ApplicationController
+  before_filter :authenticate_user!
+  
   # GET /puzzles
   # GET /puzzles.json
   def index
@@ -96,7 +98,7 @@ class PuzzlesController < ApplicationController
   
   def getPuzzleOnShow(puzzle)
   	if !puzzle
-  		return "cell11:1,cell23:5,cell99:8"
+  		return "cell11:6cell31:8cell22:7cell23:1cell24:6cell25:2cell14:3cell17:1cell36:1cell33:5cell41:5cell61:4cell53:9cell63:7cell44:8cell45:7cell65:6cell66:9cell47:9cell57:6cell49:1cell69:8cell74:2cell77:8cell79:7cell87:4cell88:1cell99:2cell85:8cell86:6cell96:3cell93:8"
   	end
   	puzzle.cellstring
   end

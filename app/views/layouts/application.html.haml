@@ -33,23 +33,20 @@
         #sudokutbl_convas
         #toolbox_convas
           #button_convas
-            %button GreedyMark
+            %button#GreedyMark GreedyMark
             %div Mark all possible values of all cells. 
           #button_convas
-            %button n_IN_n
+            %button#n_IN_n n_IN_n
             %div If cell12:24 and cell13:24, "24" should not appear on all other cells of line 1. 
           #button_convas
-            %button FindAnswer
-            %div Get the answer!!! 
+            %button#Reflection Reflection
+            %div '9' in col 3, and line 1 and line 3 of grid 1 have certain numbers, then '9' should be in line 2 of grid 1, then the rest of line 2 should not comprise of '9'
           #button_convas
-            %button Generate Picture
-            %div Generate a JPEG file from current puzzle. 
+            %button#FindAnswer FindAnswer
+            %div Get the answer!!! Be careful to use this, it will take very long time to run!!!
           #button_convas
-            %button Upload
-            %div Upload a JPEG file taken by phone or camera 
-          #button_convas
-            %button Rotate
-            %div Rotate current puzzle clockwise 90
+            %button#ResetPuzzle ResetPuzzle
+            %div Reset the puzzle to the initial status. Be cautious to use this!!!
 
         #puzzle_mgmt_convas
           = yield

@@ -14,7 +14,7 @@
     .field
       = f.label :name
       <br/>
-      = f.text_field :name, :size => 25
+      = f.text_field :name, :size => 25, :maxlength => 25
     .field
       = f.hidden_field :createon
     .field
@@ -22,7 +22,7 @@
     .field
       = f.label :description
       <br/>
-      = f.text_area :description, :size => "20x10"
+      = f.text_area :description, :size => "20x5", :maxlength => 50
     .actions
       = f.submit 'Save'
 

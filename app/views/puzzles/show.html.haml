@@ -1,17 +1,21 @@
 %p#notice= notice
 
-%p
-  %b Level:
-  = @puzzle.level
-%p
-  %b Name:
-  = @puzzle.name
-%p
-  %b Description:
-  = @puzzle.description
+#puzzles_list_convas
+  %table#puzzles_list
+    %tr
+      %th Level
+      %th Name
+      %th.Description Description
+      %th.ActionEdit
+      %th.ActionDestroy
+
+    %tr
+      %td= @puzzle.level
+      %td= @puzzle.name
+      %td= @puzzle.description
+      %td.hiddenField= @puzzle.cellstring
+      %td= link_to 'Edit', edit_puzzle_path(@puzzle)
+      %td= link_to 'Delete', @puzzle, :confirm => 'Are you sure?', :method => :delete
 
 = render 'hidden_options'
 
-= link_to 'Edit', edit_puzzle_path(@puzzle)
-\|
-= link_to 'Back', puzzles_path

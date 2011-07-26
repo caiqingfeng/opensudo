@@ -19,6 +19,10 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe PuzzlesController do
+  before (:each) do
+    @user = Factory(:user)
+    sign_in @user
+  end
 
   # This should return the minimal set of attributes required to create a valid
   # Puzzle. As you add validations to Puzzle, be sure to
@@ -27,8 +31,8 @@ describe PuzzlesController do
     @valid_attributes = {
       :name => "Example Puzzle",
       :description => "Example Puzzle",
-      :cellstring => "cell11:1,cell12:3,cell13:4",
-      :level => "1"
+      :cellstring => "cell11:6cell31:8cell22:7cell23:1cell24:6cell25:2cell14:3cell17:1cell36:1cell33:5cell41:5cell61:4cell53:9cell63:7cell44:8cell45:7cell65:6cell66:9cell47:9cell57:6cell49:1cell69:8cell74:2cell77:8cell79:7cell87:4cell88:1cell99:2cell85:8cell86:6cell96:3cell93:8",
+      :level => "3"
     }  
   end
 

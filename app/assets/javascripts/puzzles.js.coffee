@@ -13,33 +13,53 @@ $ = jQuery
 $(document).ready -> 
 	thisObj = $(this)
 	thisObj.initGrid()
-	cellString = $('#puzzleOnShow', thisObj).text()
+	orgCells = $('#puzzleOnShow', thisObj).text()
 	gridOptionText = "playable"
 	gridOptionText = $('#gridOption', thisObj).text()
 	gridObj = $('#sudokutbl', thisObj)
-	gridObj.setGrid(cellString, $.trim(gridOptionText) == "editable")
+	gridObj.setGrid(orgCells, orgCells, $.trim(gridOptionText) == "editable")
 	#set css for puzzle list
 	$('#puzzles_list tr:even').removeClass().addClass("even_tr")
 	#AJAX click on puzzle list
 	$('#puzzles_list tr').click( ->
 		return $(this).updatePuzzleOnShow())
+	$('#GreedyMark').click( ->
+		gridObj.greedyMark(orgCells, $.trim(gridOptionText) == "editable")
+		return)
+	$('#n_IN_n').click( ->
+		gridObj.n_IN_n(orgCells, $.trim(gridOptionText) == "editable")
+		return)
+	$('#Reflection').click( ->
+		gridObj.reflection(orgCells, $.trim(gridOptionText) == "editable")
+		return)
+	$('#FindAnswer').click( ->
+		solvedCellString = gridObj.findAnswer(orgCells, 0)
+		#update grid
+		gridObj.setGrid(solvedCellString, orgCells, $.trim(gridOptionText) == "editable")
+		return)
+	$('#ResetPuzzle').click( ->
+		gridObj.setGrid(orgCells, orgCells, $.trim(gridOptionText) == "editable")
+		return)
 	#set hook function of save
 	$('#puzzle_form_convas form').submit( ->
 		return gridObj.able2Solve())
 
 $.fn.updatePuzzleOnShow = () ->
 	thisObj = $(this)
-	updatePuzzleOnShow = ""
-	$('a', thisObj).each( ->
-		tmpString = $(this).attr("href")
-		updatePuzzleOnShow = tmpString.replace(/\/edit$/, ".json") if tmpString.match(/edit$/)
-		#alert(updatePuzzleOnShow)
-		return)
-	if updatePuzzleOnShow != ""
-		$.get(updatePuzzleOnShow, (data) ->
-			gridObj = $('#sudokutbl')
-			gridObj.setGrid(data["cellstring"], false)
-			return)
+	#updatePuzzleOnShow = ""
+	#AJAX to update grid works, but we can use a better solution without one more call to server
+	#$('a', thisObj).each( ->
+	#	tmpString = $(this).attr("href")
+	#	updatePuzzleOnShow = tmpString.replace(/\/edit$/, ".json") if tmpString.match(/edit$/)
+	#	return)
+	#if updatePuzzleOnShow != ""
+	#	$.get(updatePuzzleOnShow, (data) ->
+	#		gridObj = $('#sudokutbl')
+	#		gridObj.setGrid(data["cellstring"], false)
+	#		return)
+	cellString = $('.hiddenField', thisObj).text()
+	gridObj = $('#sudokutbl')
+	gridObj.setGrid(cellString, cellString, false) if cellString && cellString != ""
 	return
 	
 $.fn.able2Solve = () ->
@@ -52,7 +72,7 @@ $.fn.able2Solve = () ->
 	solvedCellString = thisObj.findAnswer(cellString, 0)
 	
 	#update grid
-	thisObj.setGrid(solvedCellString, true)
+	thisObj.setGrid(solvedCellString, "", true)
 	
 	#verify cells solved
 	able2Solved = thisObj.completedGrid(solvedCellString)
@@ -69,23 +89,6 @@ $.fn.genString = () ->
 		cellString = cellString + "," + value.id + ":" + $(value).html())
 	return cellString
 	
-#cannot DRY here because it's callback. $(this) need to be in the stack 1
-clickOnPlay = (content) ->
-	$sudo = $('#sudokutbl')
-	tdNode = $(this)
-	cellId =  tdNode[0].id.substring(4, 6)
-	cellValidate = validateCell(content.current)
-	if (cellValidate == false)
-		tdNode.html("")
-		alert("You have to enter a very different digit 1..9.")
-		return false
-	if (content.current.length > 1)
-		tdNode.removeClass().addClass("cellWithMoreNumbers")
-	else
-		tdNode.removeClass().addClass("editableCell")
-	return true
-
-#canot DRY here ... means cannot just call clickOnPlay instead of copying the code from it
 clickOnEdit = (content) ->
 	$sudo = $('#sudokutbl')
 	tdNode = $(this)
@@ -98,9 +101,7 @@ clickOnEdit = (content) ->
 	if (content.current.length > 1)
 		tdNode.removeClass().addClass("cellWithMoreNumbers")
 	else
-		tdNode.removeClass().addClass("editableCell")
-	if (content.current.length == 1)
-		$(document).updateFormCellString("cell"+cellId, content.current)
+		tdNode.removeClass().addClass("cellWithOneNumber")
 	return true
 	
 #only digits allowed and numbers should be different
@@ -112,22 +113,6 @@ validateCell = (currentV) ->
 		return false
 	return true
 
-#sudoku(options)
-
-$.fn.updateFormCellString = (cellId, cellV) ->
-	return false if cellV.length != 1
-	thisObj = $(this)
-	cellStringField = $('input[id$="cellstring"]', thisObj)
-	orgCellString = cellStringField.val()
-	patrn = new RegExp(cellId+":[1-9]*", "g")
-	#patrn.global = true
-	if orgCellString.match(patrn)
-		cellString = orgCellString.replace(patrn, cellId+":"+cellV)
-	else
-		cellString = orgCellString+cellId+":"+cellV
-	cellStringField.val(cellString)
-	return true
-	
 $.fn.initGrid = () ->
 	thisObj = $(this)
 	convas = $('#sudokutbl_convas', thisObj)
@@ -144,17 +129,15 @@ $.fn.initGrid = () ->
 			cellXYString = 'cell' + x + y
 			createCellString = "<td id='" + cellXYString + "'></td>"
 			rowX.append(createCellString)
-			cellXY = $('#'+cellXYString, rowX)
 	
 	return true
 
-$.fn.setGrid = (cellString, editableGrid) ->
+$.fn.setGrid = (cellString, readOnlyCells, editableGrid) ->
 	cellString = "" if !cellString
 	sudoCells = $(this).getAllSudoCells()
 	sudoCells.each((i, value) ->
 		$(value).html("")
-		fnCallback = clickOnPlay
-		fnCallback = clickOnEdit if editableGrid
+		fnCallback = clickOnEdit
 		$(value).removeClass().addClass('editableCell')
 		patrn = new RegExp(value.id+":[1-9]+", "g")
 		matchedCells = cellString.match(patrn)
@@ -163,14 +146,16 @@ $.fn.setGrid = (cellString, editableGrid) ->
 			$(value).editable({onSubmit:fnCallback, editClass: 'cellInput'})
 			return
 		$(value).html(matchedCells[0].substring(7))
-		if !editableGrid
+		if !editableGrid && readOnlyCells && readOnlyCells.match(patrn)
 			$(value).unbind("click")
 			$(value).removeClass().addClass('readOnlyCell')
 		else
 			$(value).unbind("click")
 			$(value).editable({onSubmit:fnCallback, editClass: 'cellInput'})
+			if (matchedCells[0].length == 8)
+				$(value).removeClass().addClass("cellWithOneNumber")
 			if (matchedCells[0].length > 8)
-				$(value).addClass("cellWithMoreNumbers")
+				$(value).removeClass().addClass("cellWithMoreNumbers")
 		return true)
 	return true
 

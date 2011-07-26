@@ -44,4 +44,6 @@ Feature: Manipulating Puzzles
       When I go to puzzles
       When I follow "Delete"
       Then I should see "Listing puzzles"
+
+      
       

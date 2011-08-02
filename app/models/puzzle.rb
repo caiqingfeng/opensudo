@@ -24,11 +24,20 @@ class Puzzle
     1.upto(9) do |x|
       1.upto(9) do |y|
         #if cellxy found, should be cellxy:[1-9]
-        pattrn = Regexp.new("cell"+x.to_s+y.to_s)
-        if self.cellstring =~ pattrn
-          errors.add(:cellstring, "one cell assigned value once") if self.cellstring.scan(pattrn).length != 1
-          pattrn = Regexp.new("cell"+x.to_s+y.to_s+":[1-9]{1}")
-          errors.add(:cellstring, "only [1..9] allowed for sudoku") if !(self.cellstring =~ pattrn)
+        pattrn = Regexp.new("cell"+x.to_s+y.to_s+":")
+        if self.cellstring.match(pattrn)
+        #ruby's string.scan doesn't return nil even no match
+          pattrn = Regexp.new("(cell"+x.to_s+y.to_s+":(.|$)(?=,|$))")
+          matchedCellArray = self.cellstring.scan(pattrn)
+          #scan will return an empty array if no match
+          next if matchedCellArray.length == 0
+          errors.add(:cellstring, "one cell assigned value once") if matchedCellArray.length != 1
+          tmpString = matchedCellArray[0][0]
+          #ruby's scan is very different from javascript global match!!!
+          tmpLen = tmpString.length
+          next if tmpLen == 7 || (tmpLen == 8 && tmpString[7] == ',')
+          tmpScope = '1'..'9'
+          errors.add(:cellstring, "only 1..9 allowed") if (tmpLen == 8 && !tmpScope.include?(tmpString[7])) 
         end
       end
     end

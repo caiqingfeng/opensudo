@@ -24,25 +24,39 @@ $(document).ready ->
 	$('#puzzles_list tr').click( ->
 		return $(this).updatePuzzleOnShow())
 	$('#GreedyMark').click( ->
+		orgCells = $('#puzzleOnShow', thisObj).text()
 		gridObj.greedyMark(orgCells, $.trim(gridOptionText) == "editable")
 		return)
 	$('#n_IN_n').click( ->
+		orgCells = $('#puzzleOnShow', thisObj).text()
 		gridObj.n_IN_n(orgCells, $.trim(gridOptionText) == "editable")
 		return)
 	$('#Reflection').click( ->
+		orgCells = $('#puzzleOnShow', thisObj).text()
 		gridObj.reflection(orgCells, $.trim(gridOptionText) == "editable")
 		return)
+	$('#X-Wing').click( ->
+		orgCells = $('#puzzleOnShow', thisObj).text()
+		gridObj.X_Wing(orgCells, $.trim(gridOptionText) == "editable")
+		return)
 	$('#FindAnswer').click( ->
-		solvedCellString = gridObj.findAnswer(orgCells, 0)
+		orgCells = $('#puzzleOnShow', thisObj).text()
+		newCellString = gridObj.genString()
+		solvedCellString = gridObj.findAnswer(newCellString, 0)
+		alert("It is not a right sudoku!") if solvedCellString == null
 		#update grid
 		gridObj.setGrid(solvedCellString, orgCells, $.trim(gridOptionText) == "editable")
 		return)
 	$('#ResetPuzzle').click( ->
+		orgCells = $('#puzzleOnShow', thisObj).text()
 		gridObj.setGrid(orgCells, orgCells, $.trim(gridOptionText) == "editable")
 		return)
 	#set hook function of save
 	$('#puzzle_form_convas form').submit( ->
-		return gridObj.able2Solve())
+		newCellString = gridObj.genString()
+		$('input[name="puzzle[cellstring]"]').val(newCellString)
+		return true)
+		#return gridObj.able2Solve())
 
 $.fn.updatePuzzleOnShow = () ->
 	thisObj = $(this)
@@ -59,7 +73,9 @@ $.fn.updatePuzzleOnShow = () ->
 	#		return)
 	cellString = $('.hiddenField', thisObj).text()
 	gridObj = $('#sudokutbl')
-	gridObj.setGrid(cellString, cellString, false) if cellString && cellString != ""
+	if cellString && cellString != ""
+		$('#puzzleOnShow').text(cellString)
+		gridObj.setGrid(cellString, cellString, false) 
 	return
 	
 $.fn.able2Solve = () ->

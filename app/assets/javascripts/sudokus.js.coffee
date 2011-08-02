@@ -49,6 +49,7 @@ greedyMark = (cellString, workingCells) ->
 		matchResult = newCellString.match(patrn)
 		tmpCell = matchResult[0] if matchResult && matchResult.length == 1 && matchResult[0].length > 7
 		tmpCell = clearCell(newCellString, workingCells, tmpCell)
+		return null if tmpCell.length == 7
 		if !matchResult 
 			newCellString = newCellString + tmpCell + "," 
 		else 
@@ -135,6 +136,32 @@ n_IN_n = (cellString, workingCells) ->
 	return updateCells(cellString, newCellString)
 
 randomGuess = (cellString, workingCells) ->
+	patrn = new RegExp("cell[1-9]{2}:[1-9]{2,}([^1-9]|$)", "g")
+	matchedResult = cellString.match(patrn)
+	return cellString if !matchedResult || matchedResult.length > 40
+	patrn_string = genRelevantPatternString(workingCells)+":[1-9]{2}([^1-9]|$)"
+	patrn = new RegExp(patrn_string, "g")
+	matchedResult = cellString.match(patrn)
+	return cellString if !matchedResult || matchedResult.length < 2
+	newCellString = cellString
+	for xx in matchedResult
+		for vv in xx.substring(7).match(/[1-9]{1}/g)
+			tmpCell = xx.substring(0, 7)+vv
+			newCellString = updateCells(cellString, tmpCell)
+			#check if this guess is right, it is easy to exclude this guess when finding out grid is wrong
+			#or completed. If it needs second guess (not completed nor wrong), it is difficult.
+			for fnTrick in [greedyMark, n_IN_n]
+				break if newCellString == null
+				for groupCell in groupCells
+					break if newCellString == null
+					return newCellString if completedGrid(newCellString)
+					newCellString = fnTrick(newCellString, groupCell)
+			continue if newCellString == null
+			return newCellString if completedGrid(newCellString)
+			#needs second guess then
+			newCellString = randomGuess(newCellString, workingCells)
+			continue if newCellString == null
+			return newCellString if completedGrid(newCellString)
 	return cellString
 
 #http://tieba.baidu.com/p/342242521?pn=1
@@ -154,19 +181,28 @@ reflection = (cellString, workingCells) ->
 		patrn_string = genRelevantPatternString(workingCells)+":[1-9]*"+vv+"[1-9]*"
 		patrn = new RegExp(patrn_string, "g")
 		digitalInCells = newCellString.match(patrn)
-		if digitalInCells && digitalInCells.length == 2
+		if digitalInCells && digitalInCells.length in [2..3]
 			patrn_string = ""
-			if digitalInCells[0].charAt(4) == digitalInCells[1].charAt(4)
+			sameRow = digitalInCells[0].charAt(4)
+			sameCol = digitalInCells[0].charAt(5)
+			colsOfThatGrid = ""
+			rowsOfThatGrid = ""
+			for xx in digitalInCells
+				sameRow = "" if xx.charAt(4) != sameRow
+				colsOfThatGrid = colsOfThatGrid+xx.charAt(5)
+				sameCol = "" if xx.charAt(5) != sameCol
+				rowsOfThatGrid = rowsOfThatGrid+xx.charAt(4)
+			if sameRow != ""
 				#clear row
-				patrn_string = "cell"+digitalInCells[0].charAt(4)+"("
+				patrn_string = "cell"+sameRow+"("
 				for colXX in [1..9]
-					patrn_string = patrn_string+colXX+"|" if (colXX+"") != digitalInCells[0].charAt(5) && (colXX+"") != digitalInCells[1].charAt(5)
+					patrn_string = patrn_string+colXX+"|" if !colsOfThatGrid.match(colXX) 
 				patrn_string = patrn_string.substring(0, patrn_string.length)+")"+":[1-9]*"+vv+"[1-9]*"
-			if digitalInCells[0].charAt(5) == digitalInCells[1].charAt(5)
+			if sameCol != ""
 				#clear col
 				patrn_string = "cell"+"("
 				for rowXX in [1..9]
-					patrn_string = patrn_string+rowXX+"|" if (rowXX+"") != digitalInCells[0].charAt(4) && (rowXX+"") != digitalInCells[1].charAt(4)
+					patrn_string = patrn_string+rowXX+"|" if !rowsOfThatGrid.match(rowXX)
 				patrn_string = patrn_string.substring(0, patrn_string.length)+")"+digitalInCells[1].charAt(5)+":[1-9]*"+vv+"[1-9]*"
 			if patrn_string != ""
 				patrn = new RegExp(patrn_string, "g")
@@ -181,6 +217,7 @@ reflection = (cellString, workingCells) ->
 	return updatedCells
 
 fnBasicTricks = [greedyMark, n_IN_n, randomGuess]
+fnBasicTricksWithoutGuess = [greedyMark, n_IN_n]
 fnAdvancedTricks = [reflection]
 
 getConfirmedCells = (cellString) ->
@@ -212,27 +249,31 @@ clearCell = (cellString, workingCells, cellxy) ->
 
 	return "cell"+xy+":"+clearV
 
-$.fn.findAnswer = (cellString, stackLevel) ->
-	return cellString if stackLevel > 4 
-	#groupCells = [row1..row9 col1..col9 grid1..grid9]
-	#fnRules = [greedyMark, n_IN_n, randomGuess...]
-	#for groupCell in groupCells
-	#for fnRule in fnRules
-	#newCellString = fnRule(cellString, groupCell)
+#try tricks without any guessing firstly
+#then try guessing
+findAnswer = (cellString, stackLevel, withoutGuess) ->
+	return cellString if cellString == null
+	return cellString if !withoutGuess && stackLevel > 4
+	return findAnswer(cellString, 0, false) if withoutGuess && stackLevel > 4
+	arrayBasicTricks = fnBasicTricksWithoutGuess
+	arrayBasicTricks = fnBasicTricks if !withoutGuess
 	newCellString = cellString
 	#basic trick, checking only for one row or one col or one grid
-	for fnTrick in fnBasicTricks
+	for fnTrick in arrayBasicTricks
 		for groupCell in groupCells
-			return newCellString if $(this).completedGrid(newCellString)
+			return newCellString if newCellString == null || completedGrid(newCellString)
 			newCellString = fnTrick(newCellString, groupCell)
-	return newCellString if $(this).completedGrid(newCellString)
+	return newCellString if newCellString == null || completedGrid(newCellString)
 	#advanced trick, checking grid first and then check relevant row or col
 	for fnTrick in fnAdvancedTricks
 		for gridCell in gridsOfGrid
-			return newCellString if $(this).completedGrid(newCellString)
+			return newCellString if newCellString == null || completedGrid(newCellString)
 			newCellString = fnTrick(newCellString, gridCell)
-	return newCellString if $(this).completedGrid(newCellString)
-	return $(this).findAnswer(newCellString, stackLevel+1)
+	return newCellString if newCellString == null || completedGrid(newCellString)
+	return findAnswer(newCellString, stackLevel+1, withoutGuess)
+
+$.fn.findAnswer = (cellString, stackLevel) ->
+	return findAnswer(cellString, stackLevel, true)
 
 $.fn.greedyMark = (orgCells, editableGrid) ->
 	newCellString = $(this).genString()
@@ -242,6 +283,7 @@ $.fn.greedyMark = (orgCells, editableGrid) ->
 				$(this).setGrid(newCellString, orgCells, editableGrid)
 				return newCellString
 			newCellString = fnRule(newCellString, groupCell)
+			return null if newCellString == null
 	$(this).setGrid(newCellString, orgCells, editableGrid)
 	return newCellString
 
@@ -256,6 +298,12 @@ $.fn.reflection = (orgCells, editableGrid) ->
 	$(this).setGrid(newCellString, orgCells, editableGrid)
 	return newCellString
 
+$.fn.X_Wing = (orgCells, editableGrid) ->
+	newCellString = $(this).genString()
+	
+	$(this).setGrid(newCellString, orgCells, editableGrid)
+	return newCellString
+
 $.fn.n_IN_n = (orgCells, editableGrid) ->
 	newCellString = $(this).genString()
 	for fnRule in [n_IN_n]
@@ -264,17 +312,20 @@ $.fn.n_IN_n = (orgCells, editableGrid) ->
 			newCellString = fnRule(newCellString, groupCell)
 	$(this).setGrid(newCellString, orgCells, editableGrid)
 	return newCellString
-		
-$.fn.completedGrid = (cellString) ->
+
+completedGrid = (cellString) ->
 	patrn = new RegExp("cell[1-9]{2}"+":[1-9]{1}"+"([^1-9]|$)", "g")
 	completedCells = cellString.match(patrn)
 	return false if !completedCells || completedCells.length != 81
 	#row by row, col by col and then grid by grid
-	patrn_0 = new RegExp("[1-9]{2}", "g")
 	for v in [1..9]
 		for groupCell in groupCells
 			patrn_string = genRelevantPatternString(groupCell)+":" + v + "([^1-9]|$)"
 			patrn = new RegExp(patrn_string, "g")
-			return false if cellString.match(patrn).length != 1
+			matchedResult = cellString.match(patrn)
+			return false if !matchedResult || matchedResult.length != 1
 	return true
+		
+$.fn.completedGrid = (cellString) ->
+	return completedGrid(cellString)
 	

@@ -69,9 +69,9 @@ describe Puzzle do
     cell_value_not_1_9_puzzle.should_not be_valid
   end
   
-  it "should reject if cell's value is not in the range [1..9] part 3" do
+  it "should succeed if cell's value is null" do
     cell_value_not_1_9_puzzle = Puzzle.new(@attr.merge(:cellstring => "cell11:,cell19:1"))
-    cell_value_not_1_9_puzzle.should_not be_valid
+    cell_value_not_1_9_puzzle.should be_valid
   end
   
   it "should reject if cellstring is line conflict" do

@@ -138,7 +138,7 @@ n_IN_n = (cellString, workingCells) ->
 randomGuess = (cellString, workingCells) ->
 	patrn = new RegExp("cell[1-9]{2}:[1-9]{2,}([^1-9]|$)", "g")
 	matchedResult = cellString.match(patrn)
-	return cellString if !matchedResult || matchedResult.length > 40
+	return cellString if !matchedResult || matchedResult.length > 45
 	patrn_string = genRelevantPatternString(workingCells)+":[1-9]{2}([^1-9]|$)"
 	patrn = new RegExp(patrn_string, "g")
 	matchedResult = cellString.match(patrn)
@@ -254,7 +254,11 @@ clearCell = (cellString, workingCells, cellxy) ->
 findAnswer = (cellString, stackLevel, withoutGuess) ->
 	return cellString if cellString == null
 	return cellString if !withoutGuess && stackLevel > 4
-	return findAnswer(cellString, 0, false) if withoutGuess && stackLevel > 4
+	if withoutGuess && stackLevel > 4
+		patrn = new RegExp("cell[1-9]{2}:[1-9]{1}", "g")
+		matchedResult = cellString.match(patrn)
+		if matchedResult && matchedResult.length > 17
+			return findAnswer(cellString, 0, false) 
 	arrayBasicTricks = fnBasicTricksWithoutGuess
 	arrayBasicTricks = fnBasicTricks if !withoutGuess
 	newCellString = cellString
@@ -298,12 +302,6 @@ $.fn.reflection = (orgCells, editableGrid) ->
 	$(this).setGrid(newCellString, orgCells, editableGrid)
 	return newCellString
 
-$.fn.X_Wing = (orgCells, editableGrid) ->
-	newCellString = $(this).genString()
-	
-	$(this).setGrid(newCellString, orgCells, editableGrid)
-	return newCellString
-
 $.fn.n_IN_n = (orgCells, editableGrid) ->
 	newCellString = $(this).genString()
 	for fnRule in [n_IN_n]
@@ -328,4 +326,16 @@ completedGrid = (cellString) ->
 		
 $.fn.completedGrid = (cellString) ->
 	return completedGrid(cellString)
+	
+$.fn.text2Sudo = (orgCells) ->
+	i = 0
+	newCellString = ""
+	for rr in rowsOfGrid
+		for xx in rr.match(/[1-9]{2}/g)
+			newCellString = newCellString+"cell"+xx+":"+orgCells[i]+"," if orgCells[i] <= '9' && orgCells[i] >= '0'
+			i++
+			i++ if orgCells[i] in [',', ' ', '|', '\n']
+	newCellString = newCellString.substring(0, newCellString.length)
+	return newCellString
+	
 	

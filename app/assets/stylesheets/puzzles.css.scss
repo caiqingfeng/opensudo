@@ -144,44 +144,56 @@ body.Puzzles {
 	float: left;
 }
 
-#sudokutbl_convas {
-	border: 0px; //solid 10px #e5e5e6;
-	height: 355px;
-	width: 355px;
-	float: left;
-	#sudokutbl {
-		border: solid 3px #000000;
-		table-layout:fixed;
-		tbody th, tbody td {
-			vertical-align: middle;
-			text-align: center;
-		}
-		@include tableHover;
-		padding: 0px 0px 0px 0px;
-		margin: 0px 0px 0px 0px;
-		border-collapse:collapse;
-		border-spacing: 0px 0px;
-		width: 98%;
-		height: 98%;
-		float: left;
-		td{
-			border: 1px solid #000000;
-			padding: 0px 0px 0px 0px;
-			word-wrap: break-word;
-			margin: 0px 0px;
-		}
-		#cell13, #cell23, #cell33, #cell43, #cell53, #cell63, #cell73, #cell83, #cell93 {
-			border-right-width: 3px; 
-		}
-		#cell16, #cell26, #cell36, #cell46, #cell56, #cell66, #cell76, #cell86, #cell96 {
-			border-right-width: 3px; 
-		}
-		#cell31, #cell32, #cell33, #cell34, #cell35, #cell36, #cell37, #cell38, #cell39 {
-			border-bottom-width: 3px; 
-		}
-		#cell61, #cell62, #cell63, #cell64, #cell65, #cell66, #cell67, #cell68, #cell69 {
-			border-bottom-width: 3px; 
-		}
+#Convert-form-convas {
+	border: solid 2px;
+	display: none;
+	#Convert-form {
+		height: 400px;
+		width: 300px;
+		background-color: #FFFFFF;
 	}
 }
 
+#sudokus_convas {
+	float: left;
+	#sudokutbl_convas {
+		border: 0px; //solid 10px #e5e5e6;
+		height: 355px;
+		width: 355px;
+		float: left;
+		#sudokutbl {
+			border: solid 3px #000000;
+			table-layout:fixed;
+			tbody th, tbody td {
+				vertical-align: middle;
+				text-align: center;
+			}
+			@include tableHover;
+			padding: 0px 0px 0px 0px;
+			margin: 0px 0px 0px 0px;
+			border-collapse:collapse;
+			border-spacing: 0px 0px;
+			width: 98%;
+			height: 98%;
+			float: left;
+			td{
+				border: 1px solid #000000;
+				padding: 0px 0px 0px 0px;
+				word-wrap: break-word;
+				margin: 0px 0px;
+			}
+			#cell13, #cell23, #cell33, #cell43, #cell53, #cell63, #cell73, #cell83, #cell93 {
+				border-right-width: 3px; 
+			}
+			#cell16, #cell26, #cell36, #cell46, #cell56, #cell66, #cell76, #cell86, #cell96 {
+				border-right-width: 3px; 
+			}
+			#cell31, #cell32, #cell33, #cell34, #cell35, #cell36, #cell37, #cell38, #cell39 {
+				border-bottom-width: 3px; 
+			}
+			#cell61, #cell62, #cell63, #cell64, #cell65, #cell66, #cell67, #cell68, #cell69 {
+				border-bottom-width: 3px; 
+			}
+		}
+	}
+}

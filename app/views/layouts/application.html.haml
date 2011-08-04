@@ -3,6 +3,7 @@
   %head
     %title sudoku31
     = stylesheet_link_tag :application
+    %link{:href => "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.8/themes/ui-lightness/jquery-ui.css", :rel => "stylesheet", :type => "text/css"}
     = javascript_include_tag :application
     = csrf_meta_tags
   %body.bp.two-col
@@ -30,8 +31,20 @@
         - flash.each do |name, msg|
           = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
 
-        #sudokutbl_convas
+        #sudokus_convas
+          %button#TextSudo Convert text to Sudo
+          #Convert-form-convas
+            %form{:id => "Convert-form", :title => "Covert text to sudoku"}
+              %textarea{:name => "textSudo", :cols => "40", :rows => "10"}
+              <br/>
+              %button#text2Sudo text2Sudo
+          %button#ResetPuzzle ResetPuzzle
+          <br/>
+          <br/>
+          #sudokutbl_convas
         #toolbox_convas
+          <br/>
+          <br/>
           #button_convas
             %button#GreedyMark GreedyMark
             %div Mark all possible values of all cells. 
@@ -42,15 +55,8 @@
             %button#Reflection Reflection
             %div '9' in col 3, and line 1 and line 3 of grid 1 have certain numbers, then '9' should be in line 2 of grid 1, then the rest of line 2 should not comprise of '9'
           #button_convas
-            %button#X-Wing X-Wing
-            %div If '6' in cell11 and cell21 and cell14 and cell24, then the rest of line 1/2 and col 1/4 should not have '6'  
-          #button_convas
             %button#FindAnswer FindAnswer
             %div Get the answer!!! Be careful to use this, it will take very long time to run!!!
-          #button_convas
-            %button#ResetPuzzle ResetPuzzle
-            %div Reset the puzzle to the initial status. Be cautious to use this!!!
-
         #puzzle_mgmt_convas
           = yield
       #footer

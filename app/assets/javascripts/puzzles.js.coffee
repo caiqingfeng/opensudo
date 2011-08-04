@@ -35,10 +35,6 @@ $(document).ready ->
 		orgCells = $('#puzzleOnShow', thisObj).text()
 		gridObj.reflection(orgCells, $.trim(gridOptionText) == "editable")
 		return)
-	$('#X-Wing').click( ->
-		orgCells = $('#puzzleOnShow', thisObj).text()
-		gridObj.X_Wing(orgCells, $.trim(gridOptionText) == "editable")
-		return)
 	$('#FindAnswer').click( ->
 		orgCells = $('#puzzleOnShow', thisObj).text()
 		newCellString = gridObj.genString()
@@ -51,6 +47,19 @@ $(document).ready ->
 		orgCells = $('#puzzleOnShow', thisObj).text()
 		gridObj.setGrid(orgCells, orgCells, $.trim(gridOptionText) == "editable")
 		return)
+	$('#Convert-form').dialog({autoOpen: false, modal: true, position: 'top'})
+	$('#TextSudo').click( ->
+		$('#Convert-form').dialog("open"))
+	$('#text2Sudo').click( ->
+		newCellString = $('textarea[name="textSudo"]').val()
+		#alert(newCellString)
+		newCellString = gridObj.text2Sudo(newCellString)
+		#alert(newCellString)
+		if newCellString
+			$('#puzzleOnShow', thisObj).text(newCellString)
+			gridObj.setGrid(newCellString, newCellString, $.trim(gridOptionText) == "editable")
+		$('#Convert-form').dialog("close")
+		return false)
 	#set hook function of save
 	$('#puzzle_form_convas form').submit( ->
 		newCellString = gridObj.genString()
@@ -104,7 +113,7 @@ $.fn.genString = () ->
 	sudoCells.each((i, value) ->
 		cellString = cellString + "," + value.id + ":" + $(value).html())
 	return cellString
-	
+
 clickOnEdit = (content) ->
 	$sudo = $('#sudokutbl')
 	tdNode = $(this)

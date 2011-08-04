@@ -138,7 +138,7 @@ n_IN_n = (cellString, workingCells) ->
 randomGuess = (cellString, workingCells) ->
 	patrn = new RegExp("cell[1-9]{2}:[1-9]{2,}([^1-9]|$)", "g")
 	matchedResult = cellString.match(patrn)
-	return cellString if !matchedResult || matchedResult.length > 45
+	return cellString if !matchedResult || matchedResult.length > 55
 	patrn_string = genRelevantPatternString(workingCells)+":[1-9]{2}([^1-9]|$)"
 	patrn = new RegExp(patrn_string, "g")
 	matchedResult = cellString.match(patrn)
@@ -150,12 +150,7 @@ randomGuess = (cellString, workingCells) ->
 			newCellString = updateCells(cellString, tmpCell)
 			#check if this guess is right, it is easy to exclude this guess when finding out grid is wrong
 			#or completed. If it needs second guess (not completed nor wrong), it is difficult.
-			for fnTrick in [greedyMark, n_IN_n]
-				break if newCellString == null
-				for groupCell in groupCells
-					break if newCellString == null
-					return newCellString if completedGrid(newCellString)
-					newCellString = fnTrick(newCellString, groupCell)
+			newCellString = findAnswer(newCellString, 0, "learner")
 			continue if newCellString == null
 			return newCellString if completedGrid(newCellString)
 			#needs second guess then
@@ -249,18 +244,21 @@ clearCell = (cellString, workingCells, cellxy) ->
 
 	return "cell"+xy+":"+clearV
 
-#try tricks without any guessing firstly
-#then try guessing
-findAnswer = (cellString, stackLevel, withoutGuess) ->
+#solverLevel:
+#"guru": guess
+#"master": firstly try basic tricks then use guess
+#"learner": just use basic tricks
+findAnswer = (cellString, stackLevel, solverLevel) ->
 	return cellString if cellString == null
-	return cellString if !withoutGuess && stackLevel > 4
-	if withoutGuess && stackLevel > 4
-		patrn = new RegExp("cell[1-9]{2}:[1-9]{1}", "g")
-		matchedResult = cellString.match(patrn)
-		if matchedResult && matchedResult.length > 17
-			return findAnswer(cellString, 0, false) 
-	arrayBasicTricks = fnBasicTricksWithoutGuess
-	arrayBasicTricks = fnBasicTricks if !withoutGuess
+	if stackLevel > 4
+		return cellString if solverLevel == "guru" || solverLevel == "learner"
+		if solverLevel == "master"
+			patrn = new RegExp("cell[1-9]{2}:[1-9]{1}", "g")
+			matchedResult = cellString.match(patrn)
+			if matchedResult && matchedResult.length > 17
+				return findAnswer(cellString, 0, "guru") 
+	arrayBasicTricks = fnBasicTricksWithoutGuess 
+	arrayBasicTricks = fnBasicTricks if solverLevel == "guru" 
 	newCellString = cellString
 	#basic trick, checking only for one row or one col or one grid
 	for fnTrick in arrayBasicTricks
@@ -274,10 +272,10 @@ findAnswer = (cellString, stackLevel, withoutGuess) ->
 			return newCellString if newCellString == null || completedGrid(newCellString)
 			newCellString = fnTrick(newCellString, gridCell)
 	return newCellString if newCellString == null || completedGrid(newCellString)
-	return findAnswer(newCellString, stackLevel+1, withoutGuess)
+	return findAnswer(newCellString, stackLevel+1, solverLevel)
 
 $.fn.findAnswer = (cellString, stackLevel) ->
-	return findAnswer(cellString, stackLevel, true)
+	return findAnswer(cellString, stackLevel, "master")
 
 $.fn.greedyMark = (orgCells, editableGrid) ->
 	newCellString = $(this).genString()

@@ -49,7 +49,7 @@ greedyMark = (cellString, workingCells) ->
 		matchResult = newCellString.match(patrn)
 		tmpCell = matchResult[0] if matchResult && matchResult.length == 1 && matchResult[0].length > 7
 		tmpCell = clearCell(newCellString, workingCells, tmpCell)
-		return null if tmpCell.length == 7
+		return null if !tmpCell || tmpCell.length == 7
 		if !matchResult 
 			newCellString = newCellString + tmpCell + "," 
 		else 
@@ -124,25 +124,28 @@ n_IN_n = (cellString, workingCells) ->
 					match = match+"|"
 				valueMatched = "("+valueMatched.substring(0, valueMatched.length)+")"
 				valueMatchedPatrn = new RegExp(valueMatched, "g")
-				for tmpCell in newCellString.match(patrn)
-					#if it's not listed in combinedCells then its value should get rid of possibleV
-					patrn = new RegExp(tmpCell, "g")
-					if !xx.match(patrn)
-						orgV = tmpCell.substring(7)
-						newV = orgV.replace(valueMatchedPatrn, "")
-						tmpString = tmpCell.substring(0, 7)+newV
-						newCellString = updateCells(newCellString, tmpString)
+				matchedResult = newCellString.match(patrn)
+				if matchedResult
+					for tmpCell in matchedResult
+						#if it's not listed in combinedCells then its value should get rid of possibleV
+						patrn = new RegExp(tmpCell.substring(0, 7), "g")
+						if !xx.match(patrn)
+							orgV = tmpCell.substring(7)
+							newV = orgV.replace(valueMatchedPatrn, "")
+							tmpString = tmpCell.substring(0, 7)+newV
+							newCellString = updateCells(newCellString, tmpString)
 		
 	return updateCells(cellString, newCellString)
 
-randomGuess = (cellString, workingCells) ->
+_randomGuess = (cellString, stackLevel, workingCells) ->
+	return cellString if stackLevel > 5
 	patrn = new RegExp("cell[1-9]{2}:[1-9]{2,}([^1-9]|$)", "g")
 	matchedResult = cellString.match(patrn)
-	return cellString if !matchedResult || matchedResult.length > 55
+	return cellString if !matchedResult || matchedResult.length > 65
 	patrn_string = genRelevantPatternString(workingCells)+":[1-9]{2}([^1-9]|$)"
 	patrn = new RegExp(patrn_string, "g")
 	matchedResult = cellString.match(patrn)
-	return cellString if !matchedResult || matchedResult.length < 2
+	return cellString if !matchedResult 
 	newCellString = cellString
 	for xx in matchedResult
 		for vv in xx.substring(7).match(/[1-9]{1}/g)
@@ -150,14 +153,17 @@ randomGuess = (cellString, workingCells) ->
 			newCellString = updateCells(cellString, tmpCell)
 			#check if this guess is right, it is easy to exclude this guess when finding out grid is wrong
 			#or completed. If it needs second guess (not completed nor wrong), it is difficult.
-			newCellString = findAnswer(newCellString, 0, "learner")
+			newCellString = findAnswer(newCellString, stackLevel+1, "learner") if stackLevel < 5
 			continue if newCellString == null
 			return newCellString if completedGrid(newCellString)
 			#needs second guess then
-			newCellString = randomGuess(newCellString, workingCells)
+			newCellString = findAnswer(newCellString, stackLevel+1, "guru") if stackLevel < 5
 			continue if newCellString == null
 			return newCellString if completedGrid(newCellString)
-	return cellString
+	return newCellString
+
+randomGuess = (cellString, workingCells) ->
+	return _randomGuess(cellString, 0, workingCells)
 
 #http://tieba.baidu.com/p/342242521?pn=1
 #if a number is determined to be in one line of a grid, then the rest of the line should not comprise of this number
@@ -274,8 +280,8 @@ findAnswer = (cellString, stackLevel, solverLevel) ->
 	return newCellString if newCellString == null || completedGrid(newCellString)
 	return findAnswer(newCellString, stackLevel+1, solverLevel)
 
-$.fn.findAnswer = (cellString, stackLevel) ->
-	return findAnswer(cellString, stackLevel, "master")
+$.fn.findAnswer = (cellString) ->
+	return findAnswer(cellString, 0, "master")
 
 $.fn.greedyMark = (orgCells, editableGrid) ->
 	newCellString = $(this).genString()

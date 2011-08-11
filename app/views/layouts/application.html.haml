@@ -32,6 +32,7 @@
           = content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String)
 
         #sudokus_convas
+          %button#CreateSudo CreateSudo
           %button#TextSudo Convert text to Sudo
           #Convert-form-convas
             %form{:id => "Convert-form", :title => "Covert text to sudoku"}
@@ -57,6 +58,12 @@
           #button_convas
             %button#FindAnswer FindAnswer
             %div Get the answer!!! Be careful to use this, it will take very long time to run!!!
+        %button#ListAllSudo Listing puzzles
+        %button#Sudo2Text Save sudo to text
+        #Convert-form-convas
+          %form{:id => "Convert-form-2", :title => "Covert sudo to text"}
+            %textarea{:name => "sudoText", :cols => "40", :rows => "10"}
+            <br/>
         #puzzle_mgmt_convas
           = yield
       #footer

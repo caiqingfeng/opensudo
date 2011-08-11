@@ -38,22 +38,43 @@ $(document).ready ->
 	$('#FindAnswer').click( ->
 		orgCells = $('#puzzleOnShow', thisObj).text()
 		newCellString = gridObj.genString()
-		solvedCellString = gridObj.findAnswer(newCellString, 0)
+		solvedCellString = gridObj.findAnswer(newCellString)
 		alert("It is not a right sudoku!") if solvedCellString == null
 		#update grid
+		solvedCellString = orgCells if !solvedCellString
 		gridObj.setGrid(solvedCellString, orgCells, $.trim(gridOptionText) == "editable")
 		return)
 	$('#ResetPuzzle').click( ->
 		orgCells = $('#puzzleOnShow', thisObj).text()
 		gridObj.setGrid(orgCells, orgCells, $.trim(gridOptionText) == "editable")
 		return)
+	$('#CreateSudo').click( ->
+		loc = window.location
+		pathName = loc.pathname.substring(0, loc.pathname.lastIndexOf('/') + 1)
+		newPath = loc.href.substring(0, loc.href.length - ((loc.pathname + loc.search + loc.hash).length - pathName.length))+"puzzles/new"
+		newPath = newPath.replace(/puzzles\/puzzles/g, "puzzles")
+		window.location = newPath
+		return)
+	$('#ListAllSudo').click( ->
+		loc = window.location
+		pathName = loc.pathname.substring(0, loc.pathname.lastIndexOf('/') + 1)
+		listPath = loc.href.substring(0, loc.href.length - ((loc.pathname + loc.search + loc.hash).length - pathName.length))
+		listPath = listPath.replace(/\/puzzles(\/|$)/g, "")+"/puzzles"
+		listPath = listPath.replace(/\/\/puzzles/g, "/puzzles")
+		window.location = listPath
+		return)
 	$('#Convert-form').dialog({autoOpen: false, modal: true, position: 'top'})
+	$('#Convert-form-2').dialog({autoOpen: false, modal: true, position: 'top'})
 	$('#TextSudo').click( ->
 		$('#Convert-form').dialog("open"))
+	$('#Sudo2Text').click( ->
+		newCellString = gridObj.genString()
+		$('textarea[name="sudoText"]').val(newCellString)
+		$('#Convert-form-2').dialog("open"))
 	$('#text2Sudo').click( ->
 		newCellString = $('textarea[name="textSudo"]').val()
 		#alert(newCellString)
-		newCellString = gridObj.text2Sudo(newCellString)
+		newCellString = gridObj.text2Sudo(newCellString) if !newCellString.match(/cell/i)
 		#alert(newCellString)
 		if newCellString
 			$('#puzzleOnShow', thisObj).text(newCellString)

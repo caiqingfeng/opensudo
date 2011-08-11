@@ -147,7 +147,7 @@ body.Puzzles {
 #Convert-form-convas {
 	border: solid 2px;
 	display: none;
-	#Convert-form {
+	#Convert-form, #Convert-form-2 {
 		height: 400px;
 		width: 300px;
 		background-color: #FFFFFF;
@@ -156,6 +156,8 @@ body.Puzzles {
 
 #sudokus_convas {
 	float: left;
+	width: 380px;
+	height: 400px;
 	#sudokutbl_convas {
 		border: 0px; //solid 10px #e5e5e6;
 		height: 355px;

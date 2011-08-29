@@ -113,6 +113,18 @@ finished porting sudoku.js to coffescript. There are a lot of problems have been
 15/07/2011 Warsaw
 Added AJAX update puzzle grid over the click to the list. By call jQuery.get(.json, ...)
 Added support for will_paginate, remember to restart server when change gemfile
+
+22/08/2011 Warsaw
+Ported to rails 3.1 rc6/ubuntu. 
+#1: refer to http://metaskills.net/2011/07/29/use-compass-sass-framework-files-with-the-rails-3.1.0.rc5-asset-pipeline/
+#2: added one line to Gemfile for 'therubyracer' to let coffeesciprt works!!!
+
+29/08/2011 Vienna
+To do list
+1. Push to heroku
+2. I18N
+3. more puzzles to seeds.txt
+4. Cancan - let user can only manipulate his/her own stuff
 ________________________
 
 License

@@ -125,6 +125,20 @@ To do list
 2. I18N
 3. more puzzles to seeds.txt
 4. Cancan - let user can only manipulate his/her own stuff
+
+07/10/2011 Shenzhen
+Rails 3.1 is out, port sudoku31 rails 31
+* restruct Gemfile
+* edit config/initializers/saas.rb to add one line to 
+  config.load_paths << "#{Gem.loaded_specs['compass'].full_gem_path}/frameworks/blueprint/stylesheets"
+* No one tell me that, debug it from the error message
+the guide below tells me that no hack needs, it is not right.
+http://metaskills.net/2011/05/18/use-compass-sass-framework-files-with-the-rails-3.1-asset-pipeline/
+
+To do list
+1. Html5  http://hlee.iteye.com/blog/1175506
+________________________
+
 ________________________
 
 License

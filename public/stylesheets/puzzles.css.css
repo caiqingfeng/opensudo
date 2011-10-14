@@ -1,0 +1,226 @@
+/* line 38, ../../app/assets/stylesheets/puzzles.css.scss */
+.editableCell {
+  font: bold 20px arial, helvetica, sans-serif;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px;
+  width: 11%;
+  height: 11%;
+  color: #333333;
+  background-color: #FFFFFF;
+}
+
+/* line 44, ../../app/assets/stylesheets/puzzles.css.scss */
+.readOnlyCell {
+  font: bold 20px arial, helvetica, sans-serif;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px;
+  width: 11%;
+  height: 11%;
+  color: #333333;
+  background-color: #6D7B8D;
+}
+
+/* line 49, ../../app/assets/stylesheets/puzzles.css.scss */
+.cellInput {
+  font: bold 18px arial, helvetica, sans-serif;
+  width: 82%;
+  height: 82%;
+  color: #333333;
+  background-color: #FFFFFF;
+}
+
+/* line 57, ../../app/assets/stylesheets/puzzles.css.scss */
+.cellWithMoreNumbers {
+  font: bold 9px arial, helvetica, sans-serif;
+  color: #D2B9D3;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+  background-color: #FFFFFF;
+}
+
+/* line 65, ../../app/assets/stylesheets/puzzles.css.scss */
+.cellWithOneNumber {
+  font: bold 20px arial, helvetica, sans-serif;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px;
+  width: 11%;
+  height: 11%;
+  color: #333333;
+  color: #342D7E;
+}
+
+/* line 70, ../../app/assets/stylesheets/puzzles.css.scss */
+.hiddenOptions {
+  display: none;
+}
+
+/* line 74, ../../app/assets/stylesheets/puzzles.css.scss */
+.hiddenField {
+  display: none;
+}
+
+/* line 78, ../../app/assets/stylesheets/puzzles.css.scss */
+#toolbox_convas {
+  border: 0px;
+  height: 415px;
+  width: 205px;
+  float: left;
+}
+
+/* line 85, ../../app/assets/stylesheets/puzzles.css.scss */
+#button_convas {
+  border: dotted 5px #e5e5e6;
+  height: 65px;
+  width: 205px;
+  float: left;
+  background-color: #FFFFFF;
+}
+
+/* line 93, ../../app/assets/stylesheets/puzzles.css.scss */
+#puzzle_mgmt_convas {
+  border: 0px;
+  height: 300px;
+  width: 640px;
+  float: left;
+}
+/* line 98, ../../app/assets/stylesheets/puzzles.css.scss */
+#puzzle_mgmt_convas #puzzles_list_convas {
+  border: 0px;
+  height: 90%;
+  width: 95%;
+  float: left;
+}
+/* line 103, ../../app/assets/stylesheets/puzzles.css.scss */
+#puzzle_mgmt_convas #puzzles_list_convas #puzzles_list {
+  border: solid 0px #03476F;
+  table-layout: fixed;
+  width: 98%;
+}
+/* line 106, ../../app/assets/stylesheets/puzzles.css.scss */
+#puzzle_mgmt_convas #puzzles_list_convas #puzzles_list tbody th, #puzzle_mgmt_convas #puzzles_list_convas #puzzles_list tbody td {
+  vertical-align: middle;
+  text-align: center;
+}
+/* line 22, ../../app/assets/stylesheets/puzzles.css.scss */
+#puzzle_mgmt_convas #puzzles_list_convas #puzzles_list tbody tr:hover {
+  background: #FFD800;
+  border: 1px solid #03476F;
+  color: #FFFFFF;
+}
+/* line 112, ../../app/assets/stylesheets/puzzles.css.scss */
+#puzzle_mgmt_convas #puzzles_list_convas #puzzles_list tr {
+  background-color: #43BFC7;
+}
+/* line 115, ../../app/assets/stylesheets/puzzles.css.scss */
+#puzzle_mgmt_convas #puzzles_list_convas #puzzles_list .even_tr {
+  background-color: #E6A9EC;
+}
+/* line 118, ../../app/assets/stylesheets/puzzles.css.scss */
+#puzzle_mgmt_convas #puzzles_list_convas #puzzles_list tr {
+  height: 35px;
+}
+/* line 120, ../../app/assets/stylesheets/puzzles.css.scss */
+#puzzle_mgmt_convas #puzzles_list_convas #puzzles_list tr td, #puzzle_mgmt_convas #puzzles_list_convas #puzzles_list tr th {
+  border: 0px solid #03476F;
+  padding: 0px 0px 0px 0px;
+  word-wrap: break-word;
+  margin: 0px 0px;
+  overflow: hidden;
+}
+/* line 127, ../../app/assets/stylesheets/puzzles.css.scss */
+#puzzle_mgmt_convas #puzzles_list_convas #puzzles_list tr .Description {
+  width: 360px;
+}
+/* line 130, ../../app/assets/stylesheets/puzzles.css.scss */
+#puzzle_mgmt_convas #puzzles_list_convas #puzzles_list tr .ActionEdit {
+  width: 35px;
+}
+/* line 133, ../../app/assets/stylesheets/puzzles.css.scss */
+#puzzle_mgmt_convas #puzzles_list_convas #puzzles_list tr .ActionDestroy {
+  width: 55px;
+}
+
+/* line 141, ../../app/assets/stylesheets/puzzles.css.scss */
+#picture_canvas {
+  border: solid 10px #e5e5e6;
+  height: 200px;
+  float: left;
+}
+
+/* line 147, ../../app/assets/stylesheets/puzzles.css.scss */
+#Convert-form-convas {
+  border: solid 2px;
+  display: none;
+}
+/* line 150, ../../app/assets/stylesheets/puzzles.css.scss */
+#Convert-form-convas #Convert-form, #Convert-form-convas #Convert-form-2 {
+  height: 400px;
+  width: 300px;
+  background-color: #FFFFFF;
+}
+
+/* line 157, ../../app/assets/stylesheets/puzzles.css.scss */
+#sudokus_convas {
+  float: left;
+  width: 380px;
+  height: 400px;
+}
+/* line 161, ../../app/assets/stylesheets/puzzles.css.scss */
+#sudokus_convas #sudokutbl_convas {
+  border: 0px;
+  height: 355px;
+  width: 355px;
+  float: left;
+}
+/* line 166, ../../app/assets/stylesheets/puzzles.css.scss */
+#sudokus_convas #sudokutbl_convas #sudokutbl {
+  border: solid 3px #000000;
+  table-layout: fixed;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+  border-collapse: collapse;
+  border-spacing: 0px 0px;
+  width: 98%;
+  height: 98%;
+  float: left;
+}
+/* line 169, ../../app/assets/stylesheets/puzzles.css.scss */
+#sudokus_convas #sudokutbl_convas #sudokutbl tbody th, #sudokus_convas #sudokutbl_convas #sudokutbl tbody td {
+  vertical-align: middle;
+  text-align: center;
+}
+/* line 9, ../../app/assets/stylesheets/puzzles.css.scss */
+#sudokus_convas #sudokutbl_convas #sudokutbl tbody td:hover {
+  background: #FFD800;
+  border: 1px solid #03476F;
+  color: #FFFFFF;
+}
+/* line 15, ../../app/assets/stylesheets/puzzles.css.scss */
+#sudokus_convas #sudokutbl_convas #sudokutbl tbody td:hover th,
+#sudokus_convas #sudokutbl_convas #sudokutbl tbody td.odd:hover th {
+  background: #FFD800;
+  color: #FFFFFF;
+}
+/* line 181, ../../app/assets/stylesheets/puzzles.css.scss */
+#sudokus_convas #sudokutbl_convas #sudokutbl td {
+  border: 1px solid #000000;
+  padding: 0px 0px 0px 0px;
+  word-wrap: break-word;
+  margin: 0px 0px;
+}
+/* line 187, ../../app/assets/stylesheets/puzzles.css.scss */
+#sudokus_convas #sudokutbl_convas #sudokutbl #cell13, #sudokus_convas #sudokutbl_convas #sudokutbl #cell23, #sudokus_convas #sudokutbl_convas #sudokutbl #cell33, #sudokus_convas #sudokutbl_convas #sudokutbl #cell43, #sudokus_convas #sudokutbl_convas #sudokutbl #cell53, #sudokus_convas #sudokutbl_convas #sudokutbl #cell63, #sudokus_convas #sudokutbl_convas #sudokutbl #cell73, #sudokus_convas #sudokutbl_convas #sudokutbl #cell83, #sudokus_convas #sudokutbl_convas #sudokutbl #cell93 {
+  border-right-width: 3px;
+}
+/* line 190, ../../app/assets/stylesheets/puzzles.css.scss */
+#sudokus_convas #sudokutbl_convas #sudokutbl #cell16, #sudokus_convas #sudokutbl_convas #sudokutbl #cell26, #sudokus_convas #sudokutbl_convas #sudokutbl #cell36, #sudokus_convas #sudokutbl_convas #sudokutbl #cell46, #sudokus_convas #sudokutbl_convas #sudokutbl #cell56, #sudokus_convas #sudokutbl_convas #sudokutbl #cell66, #sudokus_convas #sudokutbl_convas #sudokutbl #cell76, #sudokus_convas #sudokutbl_convas #sudokutbl #cell86, #sudokus_convas #sudokutbl_convas #sudokutbl #cell96 {
+  border-right-width: 3px;
+}
+/* line 193, ../../app/assets/stylesheets/puzzles.css.scss */
+#sudokus_convas #sudokutbl_convas #sudokutbl #cell31, #sudokus_convas #sudokutbl_convas #sudokutbl #cell32, #sudokus_convas #sudokutbl_convas #sudokutbl #cell33, #sudokus_convas #sudokutbl_convas #sudokutbl #cell34, #sudokus_convas #sudokutbl_convas #sudokutbl #cell35, #sudokus_convas #sudokutbl_convas #sudokutbl #cell36, #sudokus_convas #sudokutbl_convas #sudokutbl #cell37, #sudokus_convas #sudokutbl_convas #sudokutbl #cell38, #sudokus_convas #sudokutbl_convas #sudokutbl #cell39 {
+  border-bottom-width: 3px;
+}
+/* line 196, ../../app/assets/stylesheets/puzzles.css.scss */
+#sudokus_convas #sudokutbl_convas #sudokutbl #cell61, #sudokus_convas #sudokutbl_convas #sudokutbl #cell62, #sudokus_convas #sudokutbl_convas #sudokutbl #cell63, #sudokus_convas #sudokutbl_convas #sudokutbl #cell64, #sudokus_convas #sudokutbl_convas #sudokutbl #cell65, #sudokus_convas #sudokutbl_convas #sudokutbl #cell66, #sudokus_convas #sudokutbl_convas #sudokutbl #cell67, #sudokus_convas #sudokutbl_convas #sudokutbl #cell68, #sudokus_convas #sudokutbl_convas #sudokutbl #cell69 {
+  border-bottom-width: 3px;
+}

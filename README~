@@ -165,6 +165,8 @@ now sudoku31 can run on heroku ->
 * verify account to install mongohq:free(heroku addons:add mongohq:free)
 * modify config/mongoid.yml, change production's setup
 http://saberma.me/rails/2010/12/23/deploy-rails-app-to-heroku-and-use-mongohq.html
+* heroku create opensudo -s cedar
+* needs to modify gemfile about "therubyracer" to development, for cedar already have V8 engine embed
 * heroku run rake db:seed
 ________________________
 

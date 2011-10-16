@@ -168,6 +168,10 @@ http://saberma.me/rails/2010/12/23/deploy-rails-app-to-heroku-and-use-mongohq.ht
 * heroku create opensudo -s cedar
 * needs to modify gemfile about "therubyracer" to development, for cedar already have V8 engine embed
 * heroku run rake db:seed
+
+to fix the static jpg asset problem:
+https://github.com/rails/rails/issues/1822
+comment out config.action_dispatch.x_sendfile_header in production.rb
 ________________________
 
 ________________________

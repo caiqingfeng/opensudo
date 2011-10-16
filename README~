@@ -152,15 +152,6 @@ http://ruby.railstutorial.org/ruby-on-rails-tutorial-book#sec:github
 To do list
 1. Html5  http://hlee.iteye.com/blog/1175506
 
-
-16/10/2011 Shenzhen
-yesterday upgrade system to ubuntu 11.10 after 10+ hours. And I was shocked to see my PC kept rebooting to do memtest86 in the morning.
-I firstly think it failed to upgrade. So I used a 10.04 usb-harddisk to try to rescue it. And it became worse and said that "symbol cannot be found, grub_putchar". The reason I guess it is the difference between grub and grub2
-Then I used a DOS boot CD to boot my PC and restore C: by ghost and then fdisk/mbr make windows bootable and fortunately the Grub4dos which I installed before worked well.
-Then use 11.04 iso to rescue grub2. the first error appeared again. 
-Then I googled the error message and in one similar serie to say that if no bootable menu appeared, you can press shift to see grub menu. Yes, I did that and the menu was there. And I ran into the first one 11.10 but another error came out: when I open firefox I just see a white screen. I guess it is the problem of 3D and it is. fix it by login into 2D.
-
-
 ________________________
 
 ________________________

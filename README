@@ -160,7 +160,14 @@ Then I used a DOS boot CD to boot my PC and restore C: by ghost and then fdisk/m
 Then use 11.04 iso to rescue grub2. the first error appeared again. 
 Then I googled the error message and in one similar serie to say that if no bootable menu appeared, you can press shift to see grub menu. Yes, I did that and the menu was there. And I ran into the first one 11.10 but another error came out: when I open firefox I just see a white screen. I guess it is the problem of 3D and it is. fix it by login into 2D.
 
-
+16/10/2011 Shenzhen
+now sudoku31 can run on heroku ->
+* verify account to install mongohq:free(heroku addons:add mongohq:free)
+* modify config/mongoid.yml, change production's setup
+http://saberma.me/rails/2010/12/23/deploy-rails-app-to-heroku-and-use-mongohq.html
+* heroku create opensudo -s cedar
+* needs to modify gemfile about "therubyracer" to development, for cedar already have V8 engine embed
+* heroku run rake db:seed
 ________________________
 
 ________________________

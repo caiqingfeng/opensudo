@@ -123,7 +123,7 @@ Ported to rails 3.1 rc6/ubuntu.
 To do list
 1. Push to heroku
 2. I18N
-3. more puzzles to seeds.txt
+3. more puzzles to seeds.rb
 4. Cancan - let user can only manipulate his/her own stuff
 
 07/10/2011 Shenzhen
@@ -165,7 +165,7 @@ now sudoku31 can run on heroku ->
 * verify account to install mongohq:free(heroku addons:add mongohq:free)
 * modify config/mongoid.yml, change production's setup
 http://saberma.me/rails/2010/12/23/deploy-rails-app-to-heroku-and-use-mongohq.html
-* heroku create opensudo -s cedar
+* heroku create opensudo --stack cedar
 * needs to modify gemfile about "therubyracer" to development, for cedar already have V8 engine embed
 * heroku run rake db:seed
 
@@ -173,7 +173,10 @@ to fix the static jpg asset problem:
 https://github.com/rails/rails/issues/1822
 comment out config.action_dispatch.x_sendfile_header in production.rb
 ________________________
-
+23/10/2011 Shenzhen
+install apatana
+to do list
+* picture to sudo
 ________________________
 
 License

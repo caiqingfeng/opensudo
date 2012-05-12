@@ -1,5 +1,4 @@
 source 'http://rubygems.org'
-gem 'therubyracer', :group => :development
 gem 'rails', '3.1.0'
 gem 'jquery-rails'
 gem "haml", ">= 3.1.2"

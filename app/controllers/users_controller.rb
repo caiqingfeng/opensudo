@@ -3,6 +3,10 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    respond_to do |format|
+      format.html { redirect_to "/", notice: 'Successfully logon.' }
+      format.json { render json: "/", status: :created, location: "/" }
+    end
 
   end
 

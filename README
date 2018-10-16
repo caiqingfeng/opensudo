@@ -3,3 +3,8 @@ Please feel free to copy and redistribute this application.
 
 Copyright 2011 Qingfeng Cai All rights reserved
 
+2018.10 updates
+这个项目是本人在海外的时候2008年左右，无聊看到ror刚兴起，当时在英国特别流行做sudokus，就自己在rails2.3上做了一个，用了jquery做界面，还用js做了一个sodukus-solver
+<br/> 核心的算法是用正则，文件在app/assets/javascripts/sudokus.js.coffee
+<br/> jgrid提供了界面上效果
+
